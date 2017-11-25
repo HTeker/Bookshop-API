@@ -13,4 +13,17 @@ describe('Products', () => {
         let products = (yield request(server).get('/product').expect(200).end()).body;
       });
   });
+
+  describe('Save a product', () => {
+  	it('it should save the product', function*(){
+  		let products = (yield request(server).get('/product').expect(200).end()).body;
+
+  		let product = {};
+  		yield request(server).post('/product', product).expect(201).end();
+
+  		let newProducts = (yield request(server).get('/product').expect(200).end()).body;
+
+  		expect(newProducts).to.have.lengthOf(products.length + 1);
+  	});
+  });
 });
