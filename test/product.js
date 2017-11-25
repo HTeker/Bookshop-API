@@ -1,4 +1,4 @@
-require("co-mocha");
+require('co-mocha');
 
 process.env.NODE_ENV = 'test';
 

@@ -1,6 +1,6 @@
-require("dotenv").load();
+require('dotenv').load();
 
-var express = require("express"),
+var express = require('express'),
 	app = express(),
 	port = process.env.PORT || 3000
 	router = express.Router(),
@@ -9,16 +9,16 @@ var express = require("express"),
 
 
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
-})
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.route("/product")
+app.route('/product')
     .get(product.getProducts)
     .post(product.saveProduct);
 
