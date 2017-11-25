@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.route("/product")
-    .get(product.getProducts);
+    .get(product.getProducts)
+    .post(product.saveProduct);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

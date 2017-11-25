@@ -1,6 +1,12 @@
+var products = [];
+
 function getProducts(req, res) {
-    const products = [];
-    res.json(products);
+    res.json(products).end();
 }
 
-module.exports = { getProducts };
+function saveProduct(req, res) {
+	products.push(req.body);
+	res.status(201).end();
+}
+
+module.exports = { getProducts, saveProduct };
