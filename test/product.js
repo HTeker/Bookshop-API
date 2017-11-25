@@ -7,14 +7,13 @@ let chai = require('chai'),
 	server = require('../server'),
 	request = require('co-supertest');
 
-describe('Get all products', () => {
-	it('it should GET all the products', function*(){
+describe('Product', () => {
+
+	it('get all products', function*(){
 		let products = (yield request(server).get('/product').expect(200).end()).body;
 	});
-});
 
-describe('Save a product', () => {
-	it('it should save the product', function*(){
+	it('save a product', function*(){
 		let products = (yield request(server).get('/product').expect(200).end()).body;
 
 		let product = {};
@@ -24,4 +23,5 @@ describe('Save a product', () => {
 
 		newProducts.should.have.lengthOf(products.length + 1);
 	});
+
 });
