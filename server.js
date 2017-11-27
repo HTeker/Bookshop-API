@@ -8,9 +8,6 @@ var express = require('express'),
 	product = require('./routes/product'),
     db = require('./data/db');
 
-db.query('CREATE TABLE IF NOT EXISTS Product (isbn INT, PRIMARY KEY(isbn))');
-
-
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
