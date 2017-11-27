@@ -14,7 +14,6 @@ const Product = db.define('Product', {
 
 //Product.belongsTo(Category);
 
-Product.sync({force: true});
-Product.sync();
+//Product.sync({force: true});
 
 module.exports = Product;

@@ -9,7 +9,6 @@ const Category = db.define('Category', {
 
 //Category.hasOne(Category, { as: 'categories', foreignKey: 'category' });
 
-Category.sync({force: true});
-Category.sync();
+//Category.sync({force: true});
 
 module.exports = Category;

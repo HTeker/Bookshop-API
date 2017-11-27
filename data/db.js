@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize({
+const db = new Sequelize({
     host: 'sql11.freemysqlhosting.net',
     port: 3306,
     database: 'sql11207449',
@@ -8,3 +8,7 @@ module.exports = new Sequelize({
     password: 'HGUbVe47Vx',
     dialect: 'mysql'
 });
+
+db.sync({force: true});
+
+module.exports = db;
