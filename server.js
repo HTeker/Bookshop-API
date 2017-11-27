@@ -22,6 +22,9 @@ app.route('/product')
     .get(product.getProducts)
     .post(product.saveProduct);
 
+app.route('/product/:id')
+    .get(product.getProductById);
+
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
 });

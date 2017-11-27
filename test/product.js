@@ -24,4 +24,11 @@ describe('Product', () => {
 		newProducts.should.have.lengthOf(products.length + 1);
 	});
 
+	it('get a product by id', function*(){
+		let new_product = { isbn: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship' };
+		yield request(server).post('/product').send(new_product).expect(201).end();
+
+		let product = (yield request(server).get('/product/0132350882').expect(200).end()).body;
+	});
+
 });
