@@ -5,7 +5,10 @@ var express = require('express'),
 	port = process.env.PORT || 3000
 	router = express.Router(),
 	bodyParser = require('body-parser'),
-	product = require('./routes/product');
+	product = require('./routes/product'),
+    db = require('./data/db');
+
+db.query('CREATE TABLE IF NOT EXISTS Product (isbn INT, PRIMARY KEY(isbn))');
 
 
 app.use(function(req, res, next) {
