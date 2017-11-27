@@ -7,6 +7,9 @@ const Category = db.define('Category', {
 	category: { type: Sequelize.INTEGER, allowNull: true }
 });
 
-Category.hasOne(Category, { as: 'categories', foreignKey: 'category' });
+//Category.hasOne(Category, { as: 'categories', foreignKey: 'category' });
+
+Category.sync({force: true});
+Category.sync();
 
 module.exports = Category;

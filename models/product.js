@@ -12,6 +12,9 @@ const Product = db.define('Product', {
 	deliveryDays: Sequelize.INTEGER
 });
 
-Product.belongsTo(Category);
+//Product.belongsTo(Category);
+
+Product.sync({force: true});
+Product.sync();
 
 module.exports = Product;

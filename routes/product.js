@@ -1,13 +1,17 @@
 var products = [];
+const Product = require('../models/product');
 
 module.exports = {
 	getProducts: (req, res) => {
-	    res.json(products).end();
+		Product.all().then(result => {
+			res.json(result).end();
+		});
 	},
 
 	saveProduct: (req, res) => {
-		products.push(req.body);
-		res.status(201).end();
+		Product.create(req.body).then(() => {
+			res.status(201).end();
+		});
 	},
 
 	getProductById: (req, res) => {
