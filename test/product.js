@@ -16,8 +16,8 @@ describe('Product', () => {
 	it('save a product', function*(){
 		let products = (yield request(server).get('/product').expect(200).end()).body;
 
-		let product = {};
-		yield request(server).post('/product', product).expect(201).end();
+		let product = { name: 'Product #1' };
+		yield request(server).post('/product').send(product).expect(201).end();
 
 		let newProducts = (yield request(server).get('/product').expect(200).end()).body;
 
