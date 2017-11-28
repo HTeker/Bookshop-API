@@ -55,14 +55,5 @@ module.exports = {
 				res.status(404).json(err).end();
 			}
 		);
-
-		/*Product.update(req.body, { where: { id: req.params.id } }).then(
-			(product) => {
-				console.log(product);
-				res.status(200).json(product).end();
-			},(err) => {
-				res.status(404).json(err).end();
-			}
-		);*/
 	}
 };
