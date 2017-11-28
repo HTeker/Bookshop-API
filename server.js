@@ -25,7 +25,8 @@ app.route('/product')
     .post(product.createProduct);
 
 app.route('/product/:id')
-    .get(product.getProductById);
+    .get(product.getProductById)
+    .delete(product.deleteProductById);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

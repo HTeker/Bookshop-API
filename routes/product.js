@@ -6,7 +6,6 @@ module.exports = {
 			(products) => {
 				res.status(200).json(products).end();
 			},(err) => {
-				console.log(err);
 				res.status(404).json(err).end();
 			}
 		);
@@ -17,7 +16,6 @@ module.exports = {
 			(product) => {
 				res.status(201).json(product).end();
 			},(err) => {
-				console.log(err);
 				res.status(400).json(err).end();
 			}
 		);
@@ -28,8 +26,17 @@ module.exports = {
 			(product) => {
 				res.status(200).json(product).end();
 			},(err) => {
-				console.log(err);
 				res.status(404).json(err).end();
+			}
+		);
+	},
+
+	deleteProductById: (req, res) => {
+		Product.destroy({ where: { id: req.params.id } }).then(
+			(product) => {
+				res.status(200).json(product).end();
+			},(err) => {
+				res.status(400).json(err).end();
 			}
 		);
 	}

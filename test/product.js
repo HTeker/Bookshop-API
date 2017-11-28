@@ -38,4 +38,14 @@ describe('Product', () => {
 		let product = (yield request(server).get('/product/0132350881').expect(200).end()).body;
 	});
 
+	it('delete a product by id', function*(){
+		let products = (yield request(server).get('/product').expect(200).end()).body;
+
+		yield request(server).delete('/product/0132350881').expect(200).end();
+
+		let newProducts = (yield request(server).get('/product').expect(200).end()).body;
+
+		newProducts.should.have.lengthOf(products.length - 1);
+	});
+
 });
