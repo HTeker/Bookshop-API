@@ -39,5 +39,30 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	updateProductById: (req, res) => {
+		Product.findById(req.params.id).then(
+			(product) => {
+				product.updateAttributes(req.body).then(
+					(updatedProduct) => {
+						res.status(200).json(updatedProduct.dataValues).end();
+					},(err) => {
+						res.status(400).json(err).end();		
+					}
+				);
+			},(err) => {
+				res.status(404).json(err).end();
+			}
+		);
+
+		/*Product.update(req.body, { where: { id: req.params.id } }).then(
+			(product) => {
+				console.log(product);
+				res.status(200).json(product).end();
+			},(err) => {
+				res.status(404).json(err).end();
+			}
+		);*/
 	}
 };

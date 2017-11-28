@@ -49,4 +49,13 @@ describe('Product', () => {
 		newProducts.should.have.lengthOf(products.length - 1);
 	});
 
+	it('update a product by id', function*(){
+		let new_product = { id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 };
+		yield request(server).post('/product').send(new_product).expect(201).end();
+
+		const product = (yield request(server).put('/product/0132350886').send({ price: 29.99 }).expect(200).end()).body;
+
+		product.price.should.equal(29.99);
+	});
+
 });
