@@ -12,7 +12,7 @@ module.exports = {
 		);
 	},
 
-	saveProduct: (req, res) => {
+	createProduct: (req, res) => {
 		Product.create(req.body).then(
 			(product) => {
 				res.status(201).json(product).end();

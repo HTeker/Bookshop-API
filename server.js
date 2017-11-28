@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.route('/product')
     .get(product.getProducts)
-    .post(product.saveProduct);
+    .post(product.createProduct);
 
 app.route('/product/:id')
     .get(product.getProductById);
