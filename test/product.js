@@ -18,6 +18,7 @@ describe('Product', () => {
 
 	it('get all products', function*(){
 		let products = (yield request(server).get('/product').expect(200).end()).body;
+		products.should.be.a('array');
 	});
 
 	it('save a product', function*(){
@@ -42,9 +43,13 @@ describe('Product', () => {
 	});
 
 	it('delete a product by id', function*(){
+
+		let new_product = { id: '01323523423', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 };
+		yield request(server).post('/product').send(new_product).expect(201).end();
+
 		let products = (yield request(server).get('/product').expect(200).end()).body;
 
-		yield request(server).delete('/product/0132350881').expect(200).end();
+		yield request(server).delete('/product/01323523423').expect(200).end();
 
 		let newProducts = (yield request(server).get('/product').expect(200).end()).body;
 
