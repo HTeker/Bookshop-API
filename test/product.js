@@ -36,6 +36,7 @@ describe('Product', () => {
 		yield request(server).post('/product').send(new_product).expect(201).end();
 
 		let product = (yield request(server).get('/product/0132350881').expect(200).end()).body;
+		product.id.should.equal(new_product.id);
 	});
 
 	it('delete a product by id', function*(){
