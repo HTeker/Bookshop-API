@@ -6,9 +6,12 @@ var express = require('express'),
 	router = express.Router(),
 	bodyParser = require('body-parser'),
 	product = require('./routes/product'),
-    db = require('./data/db');
+    db = require('./data/db'),
+    seeder = require('./data/seeder');
 
-db.sync({force: true});
+db.sync({force: true}).then(function(){
+    seeder.seed();
+});
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
