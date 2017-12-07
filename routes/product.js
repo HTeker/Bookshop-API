@@ -6,7 +6,7 @@ module.exports = {
 			(products) => {
 				res.status(200).json(products).end();
 			},(err) => {
-				res.status(404).json(err).end();
+				res.status(400).json(err).end();
 			}
 		);
 	},
@@ -24,9 +24,13 @@ module.exports = {
 	getProductById: (req, res) => {
 		Product.findById(req.params.id).then(
 			(product) => {
-				res.status(200).json(product).end();
+				if(product){
+					res.status(200).json(product).end();
+				}else{
+					res.status(404).end();
+				}
 			},(err) => {
-				res.status(404).json(err).end();
+				res.status(400).json(err).end();
 			}
 		);
 	},
@@ -34,7 +38,11 @@ module.exports = {
 	deleteProductById: (req, res) => {
 		Product.destroy({ where: { id: req.params.id } }).then(
 			(product) => {
-				res.status(200).json(product).end();
+				if(product){
+					res.status(200).json(product).end();
+				}else{
+					res.status(404).json(product).end();
+				}
 			},(err) => {
 				res.status(400).json(err).end();
 			}
@@ -44,15 +52,19 @@ module.exports = {
 	updateProductById: (req, res) => {
 		Product.findById(req.params.id).then(
 			(product) => {
-				product.updateAttributes(req.body).then(
-					(updatedProduct) => {
-						res.status(200).json(updatedProduct.dataValues).end();
-					},(err) => {
-						res.status(400).json(err).end();		
-					}
-				);
+				if(product){
+					product.updateAttributes(req.body).then(
+						(updatedProduct) => {
+							res.status(200).json(updatedProduct.dataValues).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).json(err).end();
+				}
 			},(err) => {
-				res.status(404).json(err).end();
+				res.status(400).json(err).end();
 			}
 		);
 	}
