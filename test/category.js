@@ -50,4 +50,11 @@ describe('Category', () => {
 		categories.should.have.lengthOf(4);
 	});
 
+	it('update a category by id', function*(){
+		const category = (yield request(server).put('/category/4').send({ name: 'Updated Category' }).expect(200).end()).body;
+		delete category.createdAt;
+        delete category.updatedAt;
+		category.should.deep.equal({ id: 4, name: 'Updated Category' });
+	});
+
 });

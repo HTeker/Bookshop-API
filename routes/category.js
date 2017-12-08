@@ -49,4 +49,24 @@ module.exports = {
 			}
 		);
 	},
+
+	updateCategoryById: (req, res) => {
+		Category.findById(req.params.id).then(
+			(category) => {
+				if(category){
+					category.updateAttributes(req.body).then(
+						(updatedCategory) => {
+							res.status(200).json(updatedCategory.dataValues).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).json(err).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
 };
