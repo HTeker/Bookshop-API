@@ -41,7 +41,8 @@ app.route('/product/search/:query')
 /* CATEGORIES */
 
 app.route('/category')
-    .get(category.getCategories);
+    .get(category.getCategories)
+    .post(category.createCategory);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

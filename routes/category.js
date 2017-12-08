@@ -10,5 +10,15 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	createCategory: (req, res) => {
+		Category.create(req.body).then(
+			(category) => {
+				res.status(201).json(category).end();
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
