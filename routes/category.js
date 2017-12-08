@@ -69,4 +69,20 @@ module.exports = {
 			}
 		);
 	},
+
+	searchCategories: (req, res) => {
+		Category.all({
+			where: {
+				name: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}
+			}
+		}).then(
+			(categories) => {
+				res.status(200).json(categories).end();
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	}
 };

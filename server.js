@@ -49,6 +49,9 @@ app.route('/category/:id')
     .delete(category.deleteCategoryById)
     .put(category.updateCategoryById);
 
+app.route('/category/search/:query')
+    .get(category.searchCategories);
+
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
 });

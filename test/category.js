@@ -57,4 +57,18 @@ describe('Category', () => {
 		category.should.deep.equal({ id: 4, name: 'Updated Category' });
 	});
 
+	it('search categories by name', function*(){
+		let categories = (yield request(server).get('/category/search/io').expect(200).end()).body;
+		categories.should.have.lengthOf(2);
+
+		categories = (yield request(server).get('/category/search/o').expect(200).end()).body;
+		categories.should.have.lengthOf(5);
+
+		categories = (yield request(server).get('/category/search/dfgsdfg').expect(200).end()).body;
+		categories.should.have.lengthOf(0);
+
+		categories = (yield request(server).get('/category/search/Computing').expect(200).end()).body;
+		categories.should.have.lengthOf(1);
+	});
+
 });
