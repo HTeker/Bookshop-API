@@ -20,5 +20,19 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
-	}
+	},
+
+	getCategoryById: (req, res) => {
+		Category.findById(req.params.id).then(
+			(category) => {
+				if(category){
+					res.status(200).json(category).end();
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
 };

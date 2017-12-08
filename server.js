@@ -44,6 +44,9 @@ app.route('/category')
     .get(category.getCategories)
     .post(category.createCategory);
 
+app.route('/category/:id')
+    .get(category.getCategoryById)
+
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
 });
