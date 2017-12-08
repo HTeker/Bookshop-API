@@ -44,4 +44,10 @@ describe('Category', () => {
 		category.should.deep.equal({ id: 3, name: 'Humour' });
 	});
 
+	it('delete a category by id', function*(){
+		yield request(server).delete('/category/1').expect(200).end();
+		let categories = (yield request(server).get('/category').expect(200).end()).body;
+		categories.should.have.lengthOf(4);
+	});
+
 });

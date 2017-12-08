@@ -46,6 +46,7 @@ app.route('/category')
 
 app.route('/category/:id')
     .get(category.getCategoryById)
+    .delete(category.deleteCategoryById);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
