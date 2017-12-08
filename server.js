@@ -32,6 +32,9 @@ app.route('/product/:id')
     .delete(product.deleteProductById)
     .put(product.updateProductById);
 
+app.route('/product/search/:query')
+    .get(product.searchProducts);
+
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
 });

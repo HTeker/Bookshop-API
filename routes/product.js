@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Sequelize = require('sequelize');
 
 module.exports = {
 	getProducts: (req, res) => {
@@ -63,6 +64,26 @@ module.exports = {
 				}else{
 					res.status(404).json(err).end();
 				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	searchProducts: (req, res) => {
+		Product.all({
+			where: {
+				[Sequelize.Op.or]: [{id: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}},{name: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}},{description: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}}]
+			}
+		}).then(
+			(products) => {
+				res.status(200).json(products).end();
 			},(err) => {
 				res.status(400).json(err).end();
 			}
