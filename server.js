@@ -5,7 +5,8 @@ var express = require('express'),
 	port = process.env.PORT || 3000
 	router = express.Router(),
 	bodyParser = require('body-parser'),
-	product = require('./routes/product'),
+    product = require('./routes/product'),
+	category = require('./routes/category'),
     db = require('./data/db'),
     seeder = require('./data/seeder');
 
@@ -23,6 +24,8 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+/* PRODUCTS */
+
 app.route('/product')
     .get(product.getProducts)
     .post(product.createProduct);
@@ -34,6 +37,11 @@ app.route('/product/:id')
 
 app.route('/product/search/:query')
     .get(product.searchProducts);
+
+/* CATEGORIES */
+
+app.route('/category')
+    .get(category.getCategories);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
