@@ -76,7 +76,8 @@ app.route('/user')
 
 app.route('/user/:id')
     .get(user.getUserById)
-    .delete(user.deleteUserById);
+    .delete(user.deleteUserById)
+    .put(user.updateUserById);
 
 
 app.listen(port, function(){

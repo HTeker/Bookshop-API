@@ -48,5 +48,25 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	updateUserById: (req, res) => {
+		User.findById(req.params.id).then(
+			(user) => {
+				if(user){
+					user.updateAttributes(req.body).then(
+						(updatedUser) => {
+							res.status(200).json(updatedUser.dataValues).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
