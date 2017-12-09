@@ -75,11 +75,7 @@ describe('Product', () => {
 
 	it('add one category to a product', function*(){
 		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
-
-		let new_product = { id: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 };
-		yield request(server).post('/product').send(new_product).expect(201).end();
-
-		yield request(server).post('/product/0132350882/category').send(category).expect(201).end();
+		yield request(server).post('/product/0132350886/category').send(category).expect(201).end();
 	});
 
 });
