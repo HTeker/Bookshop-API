@@ -61,7 +61,8 @@ app.route('/category/:id')
 
 app.route('/category/:id/product')
     .get(category.getProducts)
-    .post(category.addProducts);
+    .post(category.addProducts)
+    .delete(category.removeProducts);
 
 app.route('/category/search/:query')
     .get(category.searchCategories);

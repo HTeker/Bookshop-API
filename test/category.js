@@ -79,7 +79,7 @@ describe('Category', () => {
 		products.should.have.lengthOf(1);
 	});
 
-	it('get all products of the category', function*(){
+	it('get all products of a category', function*(){
 		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
 
 		for(var i = 0; i < 5; i++){
@@ -89,6 +89,36 @@ describe('Category', () => {
 
 		let products = (yield request(server).get('/category/' + category.id + '/product').expect(200).end()).body;
 		products.should.have.lengthOf(5);
+	});
+
+	it('delete one product from a category', function*(){
+		let product = (yield request(server).post('/product').send({ id: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
+		yield request(server).post('/category/4/product').send(product).expect(201).end();
+
+		let products = (yield request(server).get('/category/4/product').expect(200).end()).body;
+		products.should.have.lengthOf(1);
+
+		yield request(server).delete('/category/4/product').send(product).expect(200).end();
+
+		let newProducts = (yield request(server).get('/category/4/product').expect(200).end()).body;
+		newProducts.should.have.lengthOf(0);
+	});
+
+	it('delete multiple products from a category', function*(){
+		let products = [];
+		products.push((yield request(server).post('/product').send({ id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body);
+		products.push((yield request(server).post('/product').send({ id: '0552565970', name: 'Wonder', description: "'My name is August. I won't describe what I look like. Whatever you're thinking, it's probably worse.'", price: 7.30, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/5525/9780552565974.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body);
+		products.push((yield request(server).post('/product').send({ id: '0008164657', name: 'Bad Dad', description: "In yet another dazzling David Walliams classic, Bad Dad is a fast and furious, heart-warming.", price: 9.17, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/0081/9780008164652.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body);
+
+		yield request(server).post('/category/4/product').send(products).expect(201).end();
+
+		let returnedProducts = (yield request(server).get('/category/4/product').expect(200).end()).body;
+		returnedProducts.should.have.lengthOf(3);
+
+		yield request(server).delete('/category/4/product').send(products).expect(200).end();
+
+		let newProducts = (yield request(server).get('/category/4/product').expect(200).end()).body;
+		newProducts.should.have.lengthOf(0);
 	});
 
 });

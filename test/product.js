@@ -81,7 +81,7 @@ describe('Product', () => {
 		categories.should.have.lengthOf(1);
 	});
 
-	it('get categories of a product', function*(){
+	it('get all categories of a product', function*(){
 		let categories = [];
 		categories.push((yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body);
 		categories.push((yield request(server).post('/category').send({ name: 'Coding'}).expect(201).end()).body);

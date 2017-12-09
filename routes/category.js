@@ -131,5 +131,33 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	removeProducts: (req, res) => {
+		Category.findById(req.params.id).then(
+			(category) => {
+				if(category){
+					if(Array.isArray(req.body)){
+						var ids = [];
+
+						req.body.forEach(function(product){
+							ids.push(product.id);
+						});
+					}
+
+					category.removeProduct((ids) ? ids : req.body.id).then(
+						() => {
+							res.status(200).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
