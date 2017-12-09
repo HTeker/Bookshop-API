@@ -96,7 +96,6 @@ module.exports = {
 				if(product){
 					if(Array.isArray(req.body)){
 						var ids = [];
-
 						req.body.forEach(function(category){
 							ids.push(category.id);
 						});

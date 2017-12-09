@@ -60,7 +60,8 @@ app.route('/category/:id')
     .put(category.updateCategoryById);
 
 app.route('/category/:id/product')
-    .get(category.getProducts);
+    .get(category.getProducts)
+    .post(category.addProducts);
 
 app.route('/category/search/:query')
     .get(category.searchCategories);

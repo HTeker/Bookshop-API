@@ -86,6 +86,33 @@ module.exports = {
 		);
 	},
 
+	addProducts: (req, res) => {
+		Category.findById(req.params.id).then(
+			(category) => {
+				if(category){
+					if(Array.isArray(req.body)){
+						var ids = [];
+						req.body.forEach(function(product){
+							ids.push(product.id);
+						});
+					}
+					
+					category.addProduct((ids) ? ids : req.body.id).then(
+						(productCategory) => {
+							res.status(201).json(productCategory).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
 	getProducts: (req, res) => {
 		Category.findById(req.params.id).then(
 			(category) => {
