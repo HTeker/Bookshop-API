@@ -40,6 +40,9 @@ app.route('/product/:id')
     .delete(product.deleteProductById)
     .put(product.updateProductById);
 
+app.route('/product/:id/category')
+    .post(product.addCategory);
+
 app.route('/product/search/:query')
     .get(product.searchProducts);
 

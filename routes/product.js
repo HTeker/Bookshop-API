@@ -88,5 +88,27 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	addCategory: (req, res) => {
+		Product.findById(req.params.id).then(
+			(product) => {
+				if(product){
+					product.addCategory(req.body.id).then(
+						(productCategory) => {
+							res.status(201).json(productCategory).end();
+						},(err) => {
+							console.log(err);
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				console.log(err);
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
