@@ -62,7 +62,7 @@ module.exports = {
 						}
 					);
 				}else{
-					res.status(404).json(err).end();
+					res.status(404).end();
 				}
 			},(err) => {
 				res.status(400).json(err).end();
