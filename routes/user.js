@@ -68,5 +68,23 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	searchUsers: (req, res) => {
+		User.all({
+			where: {
+				[Sequelize.Op.or]: [{name: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}},{email: {
+					[Sequelize.Op.like]: '%' + req.params.query + '%'
+				}}]
+			}
+		}).then(
+			(users) => {
+				res.status(200).json(users).end();
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

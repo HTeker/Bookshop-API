@@ -79,6 +79,9 @@ app.route('/user/:id')
     .delete(user.deleteUserById)
     .put(user.updateUserById);
 
+app.route('/user/search/:query')
+    .get(user.searchUsers);
+
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

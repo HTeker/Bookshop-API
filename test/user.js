@@ -58,4 +58,15 @@ describe('User', () => {
 		user.should.deep.equal({ id: 4, name: 'Updated User', email: 'jack@example.com', password: '12345678' });
 	});
 
+	it('search users by name and email', function*(){
+		let users = (yield request(server).get('/user/search/example').expect(200).end()).body;
+		users.should.have.lengthOf(5);
+
+		users = (yield request(server).get('/user/search/i').expect(200).end()).body;
+		users.should.have.lengthOf(3);
+
+		users = (yield request(server).get('/user/search/halil').expect(200).end()).body;
+		users.should.have.lengthOf(1);
+	});
+
 });
