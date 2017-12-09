@@ -32,8 +32,7 @@ describe('Category', () => {
 	});
 
 	it('create a category', function*(){
-		let new_category = { name: 'Programming'};
-		yield request(server).post('/category').send(new_category).expect(201).end();
+		yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end();
 		let categories = (yield request(server).get('/category').expect(200).end()).body;
 		categories.should.have.lengthOf(6);
 	});
