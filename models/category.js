@@ -10,8 +10,4 @@ const Category = db.define('Category', {
 	name: Sequelize.STRING
 });
 
-//Category.hasOne(Category, { as: 'categories', foreignKey: 'category' });
-
-//Category.sync({force: true});
-
 module.exports = Category;

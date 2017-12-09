@@ -8,7 +8,10 @@ var express = require('express'),
     product = require('./routes/product'),
 	category = require('./routes/category'),
     db = require('./data/db'),
-    seeder = require('./data/seeder');
+    seeder = require('./data/seeder')
+    Associations = require('./models/associations');
+
+Associations.associate();
 
 db.sync({force: true}).then(function(){
     seeder.seed();

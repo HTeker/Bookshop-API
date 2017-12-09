@@ -41,7 +41,7 @@ describe('Category', () => {
 		let category = (yield request(server).get('/category/3').expect(200).end()).body;
 		delete category.createdAt;
         delete category.updatedAt;
-		category.should.deep.equal({ id: 3, name: 'Humour' });
+		category.should.deep.equal({ id: 3, name: 'Humour', categoryId: null });
 	});
 
 	it('delete a category by id', function*(){
@@ -54,7 +54,7 @@ describe('Category', () => {
 		const category = (yield request(server).put('/category/4').send({ name: 'Updated Category' }).expect(200).end()).body;
 		delete category.createdAt;
         delete category.updatedAt;
-		category.should.deep.equal({ id: 4, name: 'Updated Category' });
+		category.should.deep.equal({ id: 4, name: 'Updated Category', categoryId: null });
 	});
 
 	it('search categories by name', function*(){
