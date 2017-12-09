@@ -42,7 +42,8 @@ app.route('/product/:id')
 
 app.route('/product/:id/category')
     .get(product.getCategories)
-    .post(product.addCategories);
+    .post(product.addCategories)
+    .delete(product.removeCategories);
 
 app.route('/product/search/:query')
     .get(product.searchProducts);

@@ -93,4 +93,34 @@ describe('Product', () => {
 		returnedCategories.should.have.lengthOf(3);
 	});
 
+	it('delete one category from a product', function*(){
+		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
+		yield request(server).post('/product/0132350886/category').send(category).expect(201).end();
+
+		let categories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		categories.should.have.lengthOf(1);
+
+		yield request(server).delete('/product/0132350886/category').send(category).expect(200).end();
+
+		let newCategories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		newCategories.should.have.lengthOf(0);
+	});
+
+	it('delete multiple categories from a product', function*(){
+		let categories = [];
+		categories.push((yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body);
+		categories.push((yield request(server).post('/category').send({ name: 'Coding'}).expect(201).end()).body);
+		categories.push((yield request(server).post('/category').send({ name: 'Education'}).expect(201).end()).body);
+
+		yield request(server).post('/product/0132350886/category').send(categories).expect(201).end();
+
+		let returnedCategories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		returnedCategories.should.have.lengthOf(3);
+
+		yield request(server).delete('/product/0132350886/category').send(categories).expect(200).end();
+
+		let newCategories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		newCategories.should.have.lengthOf(0);
+	});
+
 });

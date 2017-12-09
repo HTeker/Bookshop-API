@@ -137,5 +137,33 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	removeCategories: (req, res) => {
+		Product.findById(req.params.id).then(
+			(product) => {
+				if(product){
+					if(Array.isArray(req.body)){
+						var ids = [];
+
+						req.body.forEach(function(category){
+							ids.push(category.id);
+						});
+					}
+
+					product.removeCategory((ids) ? ids : req.body.id).then(
+						() => {
+							res.status(200).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
