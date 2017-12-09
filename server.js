@@ -75,7 +75,8 @@ app.route('/user')
     .post(user.createUser);
 
 app.route('/user/:id')
-    .get(user.getUserById);
+    .get(user.getUserById)
+    .delete(user.deleteUserById);
 
 
 app.listen(port, function(){

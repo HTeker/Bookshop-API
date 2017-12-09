@@ -45,4 +45,10 @@ describe('User', () => {
 		user.should.deep.equal({id: 3, name: 'Ibrahim', email: 'ibrahim@example.com', password: '12345678'});
 	});
 
+	it('delete a user by id', function*(){
+		yield request(server).delete('/user/1').expect(200).end();
+		let users = (yield request(server).get('/user').expect(200).end()).body;
+		users.should.have.lengthOf(4);
+	});
+
 });
