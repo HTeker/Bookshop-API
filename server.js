@@ -74,6 +74,9 @@ app.route('/user')
     .get(user.getUsers)
     .post(user.createUser);
 
+app.route('/user/:id')
+    .get(user.getUserById);
+
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

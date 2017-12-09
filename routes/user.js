@@ -20,5 +20,19 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	getUserById: (req, res) => {
+		User.findById(req.params.id).then(
+			(user) => {
+				if(user){
+					res.status(200).json(user).end();
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

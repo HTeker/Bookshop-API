@@ -38,4 +38,11 @@ describe('User', () => {
 		users.should.have.lengthOf(6);
 	});
 
+	it('get a user by id', function*(){
+		let user = (yield request(server).get('/user/3').expect(200).end()).body;
+		delete user.createdAt;
+        delete user.updatedAt;
+		user.should.deep.equal({id: 3, name: 'Ibrahim', email: 'ibrahim@example.com', password: '12345678'});
+	});
+
 });
