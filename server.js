@@ -6,7 +6,8 @@ var express = require('express'),
 	router = express.Router(),
 	bodyParser = require('body-parser'),
     product = require('./routes/product'),
-	category = require('./routes/category'),
+    category = require('./routes/category'),
+	user = require('./routes/user'),
     db = require('./data/db'),
     seeder = require('./data/seeder')
     Associations = require('./models/associations');
@@ -66,6 +67,10 @@ app.route('/category/:id/product')
 
 app.route('/category/search/:query')
     .get(category.searchCategories);
+
+/* USERS */
+app.route('/user')
+    .get(user.getUsers);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
