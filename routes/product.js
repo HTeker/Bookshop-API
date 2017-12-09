@@ -42,7 +42,7 @@ module.exports = {
 				if(product){
 					res.status(200).json(product).end();
 				}else{
-					res.status(404).json(product).end();
+					res.status(404).end();
 				}
 			},(err) => {
 				res.status(400).json(err).end();
