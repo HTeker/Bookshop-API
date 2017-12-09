@@ -30,8 +30,8 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-/* PRODUCTS */
 
+/* PRODUCTS */
 app.route('/product')
     .get(product.getProducts)
     .post(product.createProduct);
@@ -49,8 +49,8 @@ app.route('/product/:id/category')
 app.route('/product/search/:query')
     .get(product.searchProducts);
 
-/* CATEGORIES */
 
+/* CATEGORIES */
 app.route('/category')
     .get(category.getCategories)
     .post(category.createCategory);
@@ -68,9 +68,12 @@ app.route('/category/:id/product')
 app.route('/category/search/:query')
     .get(category.searchCategories);
 
+
 /* USERS */
 app.route('/user')
-    .get(user.getUsers);
+    .get(user.getUsers)
+    .post(user.createUser);
+
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

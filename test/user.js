@@ -32,4 +32,10 @@ describe('User', () => {
 		users.should.have.lengthOf(5);
 	});
 
+	it('create a user', function*(){
+		yield request(server).post('/user').send({ name: 'User #', email: 'email@example.com', password: '123456'}).expect(201).end();
+		let users = (yield request(server).get('/user').expect(200).end()).body;
+		users.should.have.lengthOf(6);
+	});
+
 });

@@ -11,4 +11,14 @@ module.exports = {
 			}
 		);
 	},
+
+	createUser: (req, res) => {
+		User.create(req.body).then(
+			(user) => {
+				res.status(201).json(user).end();
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	}
 };
