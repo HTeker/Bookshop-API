@@ -59,6 +59,9 @@ app.route('/category/:id')
     .delete(category.deleteCategoryById)
     .put(category.updateCategoryById);
 
+app.route('/category/:id/product')
+    .get(category.getProducts);
+
 app.route('/category/search/:query')
     .get(category.searchCategories);
 
