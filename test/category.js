@@ -27,6 +27,7 @@ describe('Category', () => {
 
 	it('get all categories', function*(){
 		let categories = (yield request(server).get('/category').expect(200).end()).body;
+		categories.should.be.a('array');
 		categories.should.have.lengthOf(5);
 	});
 
