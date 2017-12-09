@@ -41,6 +41,7 @@ app.route('/product/:id')
     .put(product.updateProductById);
 
 app.route('/product/:id/category')
+    .get(product.getCategories)
     .post(product.addCategory);
 
 app.route('/product/search/:query')

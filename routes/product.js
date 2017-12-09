@@ -98,7 +98,26 @@ module.exports = {
 						(productCategory) => {
 							res.status(201).json(productCategory).end();
 						},(err) => {
-							console.log(err);
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	getCategories: (req, res) => {
+		Product.findById(req.params.id).then(
+			(product) => {
+				if(product){
+					product.getCategories().then(
+						(categories) => {
+							res.status(200).json(categories).end();
+						},(err) => {
 							res.status(400).json(err).end();
 						}
 					);
