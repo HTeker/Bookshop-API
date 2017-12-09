@@ -76,19 +76,21 @@ describe('Product', () => {
 	it('add one category to a product', function*(){
 		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
 		yield request(server).post('/product/0132350886/category').send(category).expect(201).end();
+
+		let categories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		categories.should.have.lengthOf(1);
 	});
 
 	it('get categories of a product', function*(){
-		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
-		let category2 = (yield request(server).post('/category').send({ name: 'Coding'}).expect(201).end()).body;
-		let category3 = (yield request(server).post('/category').send({ name: 'Education'}).expect(201).end()).body;
+		let categories = [];
+		categories.push((yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body);
+		categories.push((yield request(server).post('/category').send({ name: 'Coding'}).expect(201).end()).body);
+		categories.push((yield request(server).post('/category').send({ name: 'Education'}).expect(201).end()).body);
 
-		yield request(server).post('/product/0132350886/category').send(category).expect(201).end();
-		yield request(server).post('/product/0132350886/category').send(category2).expect(201).end();
-		yield request(server).post('/product/0132350886/category').send(category3).expect(201).end();
+		yield request(server).post('/product/0132350886/category').send(categories).expect(201).end();
 
-		let categories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
-		categories.should.have.lengthOf(3);
+		let returnedCategories = (yield request(server).get('/product/0132350886/category').expect(200).end()).body;
+		returnedCategories.should.have.lengthOf(3);
 	});
 
 });

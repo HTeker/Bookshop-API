@@ -90,11 +90,19 @@ module.exports = {
 		);
 	},
 
-	addCategory: (req, res) => {
+	addCategories: (req, res) => {
 		Product.findById(req.params.id).then(
 			(product) => {
 				if(product){
-					product.addCategory(req.body.id).then(
+					if(Array.isArray(req.body)){
+						var ids = [];
+
+						req.body.forEach(function(category){
+							ids.push(category.id);
+						});
+					}
+
+					product.addCategory((ids) ? ids : req.body.id).then(
 						(productCategory) => {
 							res.status(201).json(productCategory).end();
 						},(err) => {

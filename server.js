@@ -42,7 +42,7 @@ app.route('/product/:id')
 
 app.route('/product/:id/category')
     .get(product.getCategories)
-    .post(product.addCategory);
+    .post(product.addCategories);
 
 app.route('/product/search/:query')
     .get(product.searchProducts);
