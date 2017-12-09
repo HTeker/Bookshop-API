@@ -27,7 +27,11 @@ module.exports = {
 				products[3].addCategory(categories[3]);
 				products[4].addCategory(categories[3]);*/
 				done();
+			},(err) => {
+				console.log(err);
 			});
+		},(err) => {
+			console.log(err);
 		});
 	}
 }
