@@ -7,7 +7,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
     product = require('./routes/product'),
     category = require('./routes/category'),
-	user = require('./routes/user'),
+    user = require('./routes/user'),
+	wishlist = require('./routes/wishlist'),
     db = require('./data/db'),
     seeder = require('./data/seeder')
     Associations = require('./models/associations');
@@ -81,6 +82,11 @@ app.route('/user/:id')
 
 app.route('/user/search/:query')
     .get(user.searchUsers);
+
+// USER WISHLISTS
+app.route('/user/:id/wishlist')
+    .get(wishlist.getWishlists)
+    .post(wishlist.createWishlist);
 
 
 app.listen(port, function(){
