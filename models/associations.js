@@ -5,7 +5,6 @@ const Category = require('./category'),
 	  Order = require('./order'),
 	  OrderLine = require('./orderLine');
 
-//Category.hasMany(Product, {as: 'products', foreignKey: 'product'});
 const Associations = {
 	associate: () => {
 		Product.belongsToMany(Category, {as: 'categories', through: 'ProductCategory'});
