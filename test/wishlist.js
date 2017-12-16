@@ -65,4 +65,12 @@ describe('Wishlist', () => {
 		wishlist.should.deep.equal({ id: 3, name: 'Updated Wishlist', UserId: 1 });
 	});
 
+	it('search wishlists by name', function*(){
+		let wishlists = (yield request(server).get('/user/1/wishlist/search/wishlist').expect(200).end()).body;
+		wishlists.should.have.lengthOf(5);
+
+		wishlists = (yield request(server).get('/user/1/wishlist/search/3').expect(200).end()).body;
+		wishlists.should.have.lengthOf(1);
+	});
+
 });

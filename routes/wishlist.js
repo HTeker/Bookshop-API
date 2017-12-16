@@ -96,5 +96,20 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	searchWishlists: (req, res) => {
+		Wishlist.all({where: {
+			UserId: req.params.uid,
+			name: {
+				[Sequelize.Op.like]: '%' + req.params.query + '%'
+			}
+		}}).then(
+			(wishlists) => {
+				res.status(200).json(wishlists).end();
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

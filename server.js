@@ -93,6 +93,9 @@ app.route('/user/:uid/wishlist/:wid')
     .delete(wishlist.deleteWishlistById)
     .put(wishlist.updateWishlistById);
 
+app.route('/user/:uid/wishlist/search/:query')
+    .get(wishlist.searchWishlists);
+
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
