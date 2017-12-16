@@ -164,5 +164,36 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	removeProducts: (req, res) => {
+		Wishlist.findOne({where: {
+			id: req.params.wid,
+			UserId: req.params.uid
+		}}).then(
+			(wishlist) => {
+				if(wishlist){
+					if(Array.isArray(req.body)){
+						var ids = [];
+
+						req.body.forEach(function(product){
+							ids.push(product.id);
+						});
+					}
+
+					wishlist.removeProduct((ids) ? ids : req.body.id).then(
+						() => {
+							res.status(200).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

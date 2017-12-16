@@ -99,7 +99,8 @@ app.route('/user/:uid/wishlist/search/:query')
 // USER WISHLIST PRODUCTS
 app.route('/user/:uid/wishlist/:wid/product')
     .get(wishlist.getProducts)
-    .post(wishlist.addProducts);
+    .post(wishlist.addProducts)
+    .delete(wishlist.removeProducts);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
