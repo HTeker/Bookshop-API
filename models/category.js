@@ -2,12 +2,10 @@ const 	db = require('../data/db'),
 		Sequelize = require('sequelize');
 
 const Category = db.define('Category', {
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true
-	},
-	name: Sequelize.STRING
+	name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	}
 });
 
 module.exports = Category;
