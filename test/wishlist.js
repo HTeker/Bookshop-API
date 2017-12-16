@@ -52,4 +52,10 @@ describe('Wishlist', () => {
 		wishlist.should.deep.equal({id: 3, name: 'Wishlist #3', UserId: 1});
 	});
 
+	it('delete a wishlist from an user by id', function*(){
+		yield request(server).delete('/user/1/wishlist/3').expect(200).end();
+		let wishlists = (yield request(server).get('/user/1/wishlist').expect(200).end()).body;
+		wishlists.should.have.lengthOf(4);
+	});
+
 });

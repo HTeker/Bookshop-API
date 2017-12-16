@@ -89,7 +89,8 @@ app.route('/user/:id/wishlist')
     .post(wishlist.createWishlist);
 
 app.route('/user/:uid/wishlist/:wid')
-    .get(wishlist.getWishlistById);
+    .get(wishlist.getWishlistById)
+    .delete(wishlist.deleteWishlistById);
 
 
 app.listen(port, function(){

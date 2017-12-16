@@ -56,5 +56,22 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	deleteWishlistById: (req, res) => {
+		Wishlist.destroy({ where: {
+			id: req.params.wid,
+			UserId: req.params.uid
+		}}).then(
+			(wishlist) => {
+				if(wishlist){
+					res.status(200).json(wishlist).end();
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
