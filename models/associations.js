@@ -17,8 +17,8 @@ const Associations = {
 		Product.belongsToMany(Wishlist, {as: 'wishlists', through: 'WishlistProduct'});
 
 		User.hasMany(Order, {as: 'orders'});
-		Order.hasMany(OrderLine, {as: 'orderLines'});
-		OrderLine.hasMany(Product, {as: 'products'});
+		Order.belongsToMany(Product, {as: 'products', through: OrderLine});
+		Product.belongsToMany(Order, {as: 'orders', through: OrderLine});
 	}
 };
 
