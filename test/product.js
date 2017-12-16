@@ -43,7 +43,7 @@ describe('Product', () => {
 		let product = (yield request(server).get('/product/1847399304').expect(200).end()).body;
 		delete product.createdAt;
         delete product.updatedAt;
-		product.should.deep.equal({ id: '1847399304', name: 'The Bro Code', description: "THE BRO CODE provides men with all the rules they need to know in order to become a 'bro' and behave properly among other bros.", price: 8.01, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/8473/9781847399304.jpg', stock: 10, deliveryDays: 5, WishlistId: null });
+		product.should.deep.equal({ id: '1847399304', name: 'The Bro Code', description: "THE BRO CODE provides men with all the rules they need to know in order to become a 'bro' and behave properly among other bros.", price: 8.01, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/8473/9781847399304.jpg', stock: 10, deliveryDays: 5 });
 	});
 
 	it('delete a product by id', function*(){
@@ -56,7 +56,7 @@ describe('Product', () => {
 		const product = (yield request(server).put('/product/0552565970').send({ description: "This is the new description", price: 29.99 }).expect(200).end()).body;
 		delete product.createdAt;
         delete product.updatedAt;
-		product.should.deep.equal({ id: '0552565970', name: 'Wonder', description: "This is the new description", price: 29.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/5525/9780552565974.jpg', stock: 10, deliveryDays: 5, WishlistId: null });
+		product.should.deep.equal({ id: '0552565970', name: 'Wonder', description: "This is the new description", price: 29.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/5525/9780552565974.jpg', stock: 10, deliveryDays: 5 });
 	});
 
 	it('search products by isbn, name, description', function*(){
