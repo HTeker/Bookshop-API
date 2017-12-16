@@ -9,14 +9,23 @@ let chai = require('chai'),
 	db = require('../data/db')
 	seeder = require('../data/seeder')
 	Order = require('../models/order')
-	User = require('../models/user');
+	User = require('../models/user')
+	Product = require('../models/product');
 
 describe('Order', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
 			User.create({name: 'Halil', email: 'halil@example.com', password: '12345678'}).then((user) => {
-				done();
+				Order.create().then(order => {
+					Product.create({ id: '234234234', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).then(product => {
+						order.addProduct(product.id, {through: {quantity: 5}}).then(productOrder => {
+							user.addOrder(order).then(user => {
+								done();
+							});
+						});
+					});
+				});
 			});
 		});
 	});
@@ -32,14 +41,13 @@ describe('Order', () => {
 		products.push({product: product3, quantity: 1});
 
 		yield request(server).post('/user/1/order').send(products).expect(201).end();
+		
+		let orders = (yield request(server).get('/user/1/order').expect(200).end()).body;
+		orders.should.be.a('array');
+		orders.should.have.lengthOf(2);
 	});
 
 	it('get all orders of an user by id', function*(){
-		let products = [];
-		let product1 = (yield request(server).post('/product').send({ id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
-		products.push({product: product1, quantity: 2});
-		yield request(server).post('/user/1/order').send(products).expect(201).end();
-
 		let orders = (yield request(server).get('/user/1/order').expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(1);
