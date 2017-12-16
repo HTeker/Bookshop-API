@@ -73,4 +73,22 @@ describe('Wishlist', () => {
 		wishlists.should.have.lengthOf(1);
 	});
 
+	it('add one product to a wishlist for an user by id', function*(){
+		let product = (yield request(server).post('/product').send({ id: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
+		yield request(server).post('/user/1/wishlist/3/product').send(product).expect(201).end();
+
+		let products = (yield request(server).get('/user/1/wishlist/3/product').expect(200).end()).body;
+		products.should.have.lengthOf(1);
+	});
+
+	it('get all products of a wishlist of an user by id', function*(){
+		for(var i = 0; i < 5; i++){
+			let product = (yield request(server).post('/product').send({ id: i.toString(), name: 'Name #' + i, description: 'Description #' + i, price: 19.99, imgUrl: 'http://example.com', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
+			yield request(server).post('/user/1/wishlist/3/product').send(product).expect(201).end();
+		}
+
+		let products = (yield request(server).get('/user/1/wishlist/3/product').expect(200).end()).body;
+		products.should.have.lengthOf(5);
+	});
+
 });

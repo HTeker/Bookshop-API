@@ -11,7 +11,8 @@ const Associations = {
 		Category.belongsTo(Category, {as: 'category'});
 
 		User.hasMany(Wishlist, {as: 'wishlists'});
-		Wishlist.hasMany(Product, {as: 'products'});
+		Wishlist.belongsToMany(Product, {as: 'products', through: 'WishlistProduct'});
+		Product.belongsToMany(Wishlist, {as: 'wishlists', through: 'WishlistProduct'});
 	}
 };
 
