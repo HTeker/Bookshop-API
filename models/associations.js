@@ -1,7 +1,9 @@
 const Category = require('./category'),
 	  Product = require('./product'),
 	  User = require('./user')
-	  Wishlist = require('./wishlist');
+	  Wishlist = require('./wishlist'),
+	  Order = require('./order'),
+	  OrderLine = require('./orderLine');
 
 //Category.hasMany(Product, {as: 'products', foreignKey: 'product'});
 const Associations = {
@@ -13,6 +15,10 @@ const Associations = {
 		User.hasMany(Wishlist, {as: 'wishlists'});
 		Wishlist.belongsToMany(Product, {as: 'products', through: 'WishlistProduct'});
 		Product.belongsToMany(Wishlist, {as: 'wishlists', through: 'WishlistProduct'});
+
+		User.hasMany(Order, {as: 'orders'});
+		Order.hasMany(OrderLine, {as: 'orderLines'});
+		OrderLine.hasMany(Product, {as: 'products'});
 	}
 };
 
