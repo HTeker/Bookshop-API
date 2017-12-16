@@ -23,7 +23,6 @@ module.exports = {
 		User.findById(req.params.id).then(
 			(user) => {
 				if(user){
-					//res.status(200).json(user).end();
 					Wishlist.create(req.body).then(
 						(wishlist) => {
 							user.addWishlist(wishlist).then(wishlists => {
@@ -33,6 +32,23 @@ module.exports = {
 							res.status(400).json(err).end();
 						}
 					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	getWishlistById: (req, res) => {
+		Wishlist.findOne({where: {
+			id: req.params.wid,
+			UserId: req.params.uid
+		}}).then(
+			(wishlist) => {
+				if(wishlist){
+					res.status(200).json(wishlist.dataValues).end();
 				}else{
 					res.status(404).end();
 				}

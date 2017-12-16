@@ -43,7 +43,13 @@ describe('Wishlist', () => {
 		yield request(server).post('/user/1/wishlist').send({ name: 'New Wishlist' }).expect(201).end();
 		let wishlists = (yield request(server).get('/user/1/wishlist').expect(200).end()).body;
         wishlists.should.have.lengthOf(6);
+	});
 
+	it('get a wishlist from an user by id', function*(){
+		let wishlist = (yield request(server).get('/user/1/wishlist/3').expect(200).end()).body;
+		delete wishlist.createdAt;
+        delete wishlist.updatedAt;
+		wishlist.should.deep.equal({id: 3, name: 'Wishlist #3', UserId: 1});
 	});
 
 });

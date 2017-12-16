@@ -88,6 +88,9 @@ app.route('/user/:id/wishlist')
     .get(wishlist.getWishlists)
     .post(wishlist.createWishlist);
 
+app.route('/user/:uid/wishlist/:wid')
+    .get(wishlist.getWishlistById);
+
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
