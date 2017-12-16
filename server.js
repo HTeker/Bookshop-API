@@ -90,7 +90,8 @@ app.route('/user/:id/wishlist')
 
 app.route('/user/:uid/wishlist/:wid')
     .get(wishlist.getWishlistById)
-    .delete(wishlist.deleteWishlistById);
+    .delete(wishlist.deleteWishlistById)
+    .put(wishlist.updateWishlistById);
 
 
 app.listen(port, function(){

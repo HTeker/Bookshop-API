@@ -73,5 +73,28 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	updateWishlistById: (req, res) => {
+		Wishlist.findOne({where: {
+			id: req.params.wid,
+			UserId: req.params.uid
+		}}).then(
+			(wishlist) => {
+				if(wishlist){
+					wishlist.updateAttributes(req.body).then(
+						(updatedWishlist) => {
+							res.status(200).json(updatedWishlist.dataValues).end();
+						},(err) => {
+							res.status(400).json(err).end();
+						}
+					);
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

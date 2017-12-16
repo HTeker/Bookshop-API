@@ -58,4 +58,11 @@ describe('Wishlist', () => {
 		wishlists.should.have.lengthOf(4);
 	});
 
+	it('update a wishlist from an user by id', function*(){
+		const wishlist = (yield request(server).put('/user/1/wishlist/3').send({ name: 'Updated Wishlist' }).expect(200).end()).body;
+		delete wishlist.createdAt;
+        delete wishlist.updatedAt;
+		wishlist.should.deep.equal({ id: 3, name: 'Updated Wishlist', UserId: 1 });
+	});
+
 });
