@@ -11,7 +11,7 @@ let chai = require('chai'),
 	User = require('../models/user');
 
 
-describe('User', () => {
+describe('Wishlist', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
