@@ -53,4 +53,13 @@ describe('Order', () => {
 		orders.should.have.lengthOf(1);
 	});
 
+	it('get an order of an user by id', function*(){
+		let order = (yield request(server).get('/user/1/order/1').expect(200).end()).body;
+		delete order.createdAt;
+        delete order.updatedAt;
+        delete order.orderedAt;
+        delete order.shippedAt;
+		order.should.deep.equal({id: 1, UserId: 1});
+	});
+
 });

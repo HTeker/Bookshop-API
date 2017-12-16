@@ -103,13 +103,16 @@ app.route('/user/:uid/wishlist/:wid/product')
     .post(wishlist.addProducts)
     .delete(wishlist.removeProducts);
 
-app.listen(port, function(){
-    console.log('Running API on port: ' + port);
-});
-
 // USER ORDERS
 app.route('/user/:id/order')
     .get(order.getOrders)
     .post(order.createOrder);
+
+app.route('/user/:uid/order/:oid')
+    .get(order.getOrderById);
+
+app.listen(port, function(){
+    console.log('Running API on port: ' + port);
+});
 
 module.exports = app;

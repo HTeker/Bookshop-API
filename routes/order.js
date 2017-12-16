@@ -64,5 +64,22 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	getOrderById: (req, res) => {
+		Order.findOne({where: {
+			id: req.params.oid,
+			UserId: req.params.uid
+		}}).then(
+			(order) => {
+				if(order){
+					res.status(200).json(order.dataValues).end();
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };
