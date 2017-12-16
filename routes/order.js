@@ -3,6 +3,22 @@ const User = require('../models/user');
 const Sequelize = require('sequelize');
 
 module.exports = {
+	getOrders: (req, res) => {
+		User.findById(req.params.id).then(
+			(user) => {
+				if(user){
+					user.getOrders().then(orders => {
+						res.status(200).json(orders).end();
+					});
+				}else{
+					res.status(404).end();
+				}
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
 	createOrder: (req, res) => {
 		User.findById(req.params.id).then(
 			(user) => {

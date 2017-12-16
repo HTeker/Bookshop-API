@@ -109,6 +109,7 @@ app.listen(port, function(){
 
 // USER ORDERS
 app.route('/user/:id/order')
+    .get(order.getOrders)
     .post(order.createOrder);
 
 module.exports = app;
