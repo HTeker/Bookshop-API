@@ -8,7 +8,8 @@ var express = require('express'),
     product = require('./routes/product'),
     category = require('./routes/category'),
     user = require('./routes/user'),
-	wishlist = require('./routes/wishlist'),
+    wishlist = require('./routes/wishlist'),
+	order = require('./routes/order'),
     db = require('./data/db'),
     seeder = require('./data/seeder')
     Associations = require('./models/associations');
@@ -105,5 +106,9 @@ app.route('/user/:uid/wishlist/:wid/product')
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
 });
+
+// USER ORDERS
+app.route('/user/:id/order')
+    .post(order.createOrder);
 
 module.exports = app;
