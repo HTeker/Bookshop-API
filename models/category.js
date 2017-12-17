@@ -4,7 +4,13 @@ const 	db = require('../data/db'),
 const Category = db.define('Category', {
 	name: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: false,
+		validate: {
+			len: {
+				args: [3, 100],
+				msg: "Name should have a length between 3 and 100 characters"
+			}
+		}
 	}
 });
 
