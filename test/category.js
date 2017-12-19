@@ -83,8 +83,9 @@ describe('Category', () => {
 		let category = (yield request(server).post('/category').send({ name: 'Programming'}).expect(201).end()).body;
 
 		for(var i = 0; i < 5; i++){
-			let product = (yield request(server).post('/product').send({ id: i.toString(), name: 'Name #' + i, description: 'Description #' + i, price: 19.99, imgUrl: 'http://example.com', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
-			yield request(server).post('/product/' + i.toString() + '/category').send(category).expect(201).end();
+			let id = "1234567890" + i.toString();
+			let product = (yield request(server).post('/product').send({ id: id, name: 'Name #' + i, description: 'Description #' + i, price: 19.99, imgUrl: 'http://example.com', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
+			yield request(server).post('/product/' + id + '/category').send(category).expect(201).end();
 		}
 
 		let products = (yield request(server).get('/category/' + category.id + '/product').expect(200).end()).body;
