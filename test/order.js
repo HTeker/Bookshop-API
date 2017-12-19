@@ -16,9 +16,9 @@ describe('Order', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
-			User.create({name: 'Halil', email: 'halil@example.com', password: '12345678'}).then((user) => {
+			User.create({name: 'Halil', email: 'halil@example.com', password: '1234Pass5678'}).then((user) => {
 				Order.create().then(order => {
-					Product.create({ id: '234234234', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).then(product => {
+					Product.create({ id: '2342342341', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).then(product => {
 						order.addProduct(product.id, {through: {quantity: 5}}).then(productOrder => {
 							user.addOrder(order).then(user => {
 								done();
