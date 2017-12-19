@@ -15,7 +15,7 @@ describe('Wishlist', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
-			User.create({name: 'Halil', email: 'halil@example.com', password: '12345678'}).then((user) => {
+			User.create({name: 'Halil', email: 'halil@example.com', password: '1234Pass5678'}).then((user) => {
 				Wishlist.bulkCreate([
 					{ name: 'Wishlist #1' },
 					{ name: 'Wishlist #2' },
@@ -83,7 +83,8 @@ describe('Wishlist', () => {
 
 	it('get all products of a wishlist of an user by id', function*(){
 		for(var i = 0; i < 5; i++){
-			let product = (yield request(server).post('/product').send({ id: i.toString(), name: 'Name #' + i, description: 'Description #' + i, price: 19.99, imgUrl: 'http://example.com', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
+			let id = "1234567890" + i.toString();
+			let product = (yield request(server).post('/product').send({ id: id, name: 'Name #' + i, description: 'Description #' + i, price: 19.99, imgUrl: 'http://example.com', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
 			yield request(server).post('/user/1/wishlist/3/product').send(product).expect(201).end();
 		}
 
