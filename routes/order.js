@@ -69,7 +69,7 @@ module.exports = {
 	getOrderById: (req, res) => {
 		Order.findOne({where: {
 			id: req.params.oid,
-			UserId: req.params.uid
+			UserEmail: req.params.uid
 		}}).then(
 			(order) => {
 				if(order){

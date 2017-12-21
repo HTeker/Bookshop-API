@@ -30,7 +30,7 @@ describe('Order', () => {
 		});
 	});
 
-	it('create an order for an user by id', function*(){
+	it('create an order for an user by email', function*(){
 		let products = [];
 		let product1 = (yield request(server).post('/product').send({ id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
 		let product2 = (yield request(server).post('/product').send({ id: '0552565970', name: 'Wonder', description: "'My name is August. I won't describe what I look like. Whatever you're thinking, it's probably worse.'", price: 7.30, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/5525/9780552565974.jpg', stock: 10, deliveryDays: 5 }).expect(201).end()).body;
@@ -40,26 +40,26 @@ describe('Order', () => {
 		products.push({product: product2, quantity: 3});
 		products.push({product: product3, quantity: 1});
 
-		yield request(server).post('/user/1/order').send(products).expect(201).end();
+		yield request(server).post('/user/halil@example.com/order').send(products).expect(201).end();
 		
-		let orders = (yield request(server).get('/user/1/order').expect(200).end()).body;
+		let orders = (yield request(server).get('/user/halil@example.com/order').expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(2);
 	});
 
-	it('get all orders of an user by id', function*(){
-		let orders = (yield request(server).get('/user/1/order').expect(200).end()).body;
+	it('get all orders of an user by email', function*(){
+		let orders = (yield request(server).get('/user/halil@example.com/order').expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(1);
 	});
 
-	it('get an order of an user by id', function*(){
-		let order = (yield request(server).get('/user/1/order/1').expect(200).end()).body;
+	it('get an order of an user by email', function*(){
+		let order = (yield request(server).get('/user/halil@example.com/order/1').expect(200).end()).body;
 		delete order.createdAt;
         delete order.updatedAt;
         delete order.orderedAt;
         delete order.shippedAt;
-		order.should.deep.equal({id: 1, UserId: 1});
+		order.should.deep.equal({id: 1, UserEmail: 'halil@example.com'});
 	});
 
 });

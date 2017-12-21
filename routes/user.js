@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	deleteUserById: (req, res) => {
-		User.destroy({ where: { id: req.params.id } }).then(
+		User.destroy({ where: { email: req.params.id } }).then(
 			(user) => {
 				if(user){
 					res.status(200).json(user).end();

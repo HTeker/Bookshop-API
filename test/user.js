@@ -38,24 +38,24 @@ describe('User', () => {
 		users.should.have.lengthOf(6);
 	});
 
-	it('get a user by id', function*(){
-		let user = (yield request(server).get('/user/3').expect(200).end()).body;
+	it('get a user by email', function*(){
+		let user = (yield request(server).get('/user/ibrahim@example.com').expect(200).end()).body;
 		delete user.createdAt;
         delete user.updatedAt;
-		user.should.deep.equal({id: 3, name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678'});
+		user.should.deep.equal({name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678'});
 	});
 
-	it('delete a user by id', function*(){
-		yield request(server).delete('/user/1').expect(200).end();
+	it('delete a user by email', function*(){
+		yield request(server).delete('/user/halil@example.com').expect(200).end();
 		let users = (yield request(server).get('/user').expect(200).end()).body;
 		users.should.have.lengthOf(4);
 	});
 
-	it('update a user by id', function*(){
-		const user = (yield request(server).put('/user/4').send({ name: 'Updated User' }).expect(200).end()).body;
+	it('update a user by email', function*(){
+		const user = (yield request(server).put('/user/jack@example.com').send({ name: 'Updated User' }).expect(200).end()).body;
 		delete user.createdAt;
         delete user.updatedAt;
-		user.should.deep.equal({ id: 4, name: 'Updated User', email: 'jack@example.com', password: '1234Pass5678' });
+		user.should.deep.equal({ name: 'Updated User', email: 'jack@example.com', password: '1234Pass5678' });
 	});
 
 	it('search users by name and email', function*(){
