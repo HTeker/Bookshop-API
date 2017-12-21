@@ -2,11 +2,6 @@ const 	db = require('../data/db'),
 		Sequelize = require('sequelize');
 
 const User = db.define('User', {
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true
-	},
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false,
@@ -20,6 +15,7 @@ const User = db.define('User', {
 	email: {
 		type: Sequelize.STRING,
 		allowNull: false,
+		primaryKey: true,
 		validate: {
 			isEmail: {
 				args: [3, 100],
