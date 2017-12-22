@@ -41,7 +41,6 @@ module.exports = {
 			req.token = bearerToken;
 
 			jwt.verify(req.token, config.secretkey, (err, authData) => {
-				console.log(authData);
 				if(!err && (authData.user.email === req.params.useremail || authData.user.isAdmin)){
 					next();
 				}else{
