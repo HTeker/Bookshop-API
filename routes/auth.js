@@ -17,7 +17,7 @@ module.exports = {
 							res.status(400).end();
 						}
 
-						jwt.sign({email: user.email}, config.secretkey, (err, token) => {
+						jwt.sign({user}, config.secretkey, (err, token) => {
 							if(err){
 								res.status(400).json(err).end();
 							}else{
@@ -41,7 +41,8 @@ module.exports = {
 			req.token = bearerToken;
 
 			jwt.verify(req.token, config.secretkey, (err, authData) => {
-				if(!err && authData.email === req.params.useremail){
+				console.log(authData);
+				if(!err && (authData.user.email === req.params.useremail || authData.user.isAdmin)){
 					next();
 				}else{
 					res.status(403).end();

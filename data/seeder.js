@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Category = require('../models/category');
+const User = require('../models/user');
 
 //{ id: 'id', name: 'name', description: "description", price: 99999, imgUrl: 'imgUrl' },
 
@@ -56,17 +57,19 @@ const assortments =[{
 module.exports = {
 	seed: (done = function(){}) => {
 
-		assortments.forEach(function(assortment){
-			Category.create(assortment.category).then((category) =>{
-				Product.bulkCreate(assortment.products).then((products) => {
-					products.forEach(function(product){
-						product.addCategory(category);
+		User.create({name: 'Halil', email: 'h.teker@live.nl', password: 'Admin43998742', isAdmin: true}).then(admin => {
+			assortments.forEach(function(assortment){
+				Category.create(assortment.category).then((category) =>{
+					Product.bulkCreate(assortment.products).then((products) => {
+						products.forEach(function(product){
+							product.addCategory(category);
+						});
+					},(err) => {
+						console.log(err);
 					});
 				},(err) => {
 					console.log(err);
 				});
-			},(err) => {
-				console.log(err);
 			});
 		});
 

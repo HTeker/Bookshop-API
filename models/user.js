@@ -37,6 +37,10 @@ const User = db.define('User', {
 				msg: "Password should contain at least 1 lower case character, 1 upper case character and 1 digit"
 			}
 		}
+	},
+	isAdmin: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false
 	}
 });
 
