@@ -77,7 +77,7 @@ app.route('/user')
     .get(user.getUsers)
     .post(user.createUser);
 
-app.route('/user/:id')
+app.route('/user/:useremail')
     .get(user.getUserById)
     .delete(user.deleteUserById)
     .put(user.updateUserById);
@@ -86,30 +86,30 @@ app.route('/user/search/:query')
     .get(user.searchUsers);
 
 // USER WISHLISTS
-app.route('/user/:id/wishlist')
+app.route('/user/:useremail/wishlist')
     .get(wishlist.getWishlists)
     .post(wishlist.createWishlist);
 
-app.route('/user/:uid/wishlist/:wid')
+app.route('/user/:useremail/wishlist/:wid')
     .get(wishlist.getWishlistById)
     .delete(wishlist.deleteWishlistById)
     .put(wishlist.updateWishlistById);
 
-app.route('/user/:uid/wishlist/search/:query')
+app.route('/user/:useremail/wishlist/search/:query')
     .get(wishlist.searchWishlists);
 
 // USER WISHLIST PRODUCTS
-app.route('/user/:uid/wishlist/:wid/product')
+app.route('/user/:useremail/wishlist/:wid/product')
     .get(wishlist.getProducts)
     .post(wishlist.addProducts)
     .delete(wishlist.removeProducts);
 
 // USER ORDERS
-app.route('/user/:id/order')
-    .get(order.getOrders)
-    .post(order.createOrder);
+app.route('/user/:useremail/order')
+    .get(auth.verifyUserToken, order.getOrders)
+    .post(auth.verifyUserToken, order.createOrder);
 
-app.route('/user/:uid/order/:oid')
+app.route('/user/:useremail/order/:oid')
     .get(order.getOrderById);
 
 /* AUTH */

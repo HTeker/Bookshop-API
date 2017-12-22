@@ -23,7 +23,7 @@ module.exports = {
 	},
 
 	getUserById: (req, res) => {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					res.status(200).json(user).end();
@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	deleteUserById: (req, res) => {
-		User.destroy({ where: { email: req.params.id } }).then(
+		User.destroy({ where: { email: req.params.useremail } }).then(
 			(user) => {
 				if(user){
 					res.status(200).json(user).end();
@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	updateUserById: (req, res) => {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					user.updateAttributes(req.body).then(

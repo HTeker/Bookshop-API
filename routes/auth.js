@@ -25,10 +25,30 @@ module.exports = {
 							}
 						});
 					});
-				}				
+				}
 			},(err) => {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	verifyUserToken: (req, res, next) => {
+		const bearerHeader = req.headers['authorization'];
+
+		if(bearerHeader){
+			const bearer = bearerHeader.split(' ');
+			const bearerToken = bearer[1];
+			req.token = bearerToken;
+
+			jwt.verify(req.token, config.secretkey, (err, authData) => {
+				if(!err && authData.email === req.params.useremail){
+					next();
+				}else{
+					res.status(403).end();
+				}
+			});
+		}else{
+			res.status(403).end();
+		}
 	}
 };

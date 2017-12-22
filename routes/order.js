@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 module.exports = {
 	getOrders: (req, res) => {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					user.getOrders().then(orders => {
@@ -20,7 +20,7 @@ module.exports = {
 	},
 
 	createOrder: (req, res) => {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					Order.create().then(
@@ -69,7 +69,7 @@ module.exports = {
 	getOrderById: (req, res) => {
 		Order.findOne({where: {
 			id: req.params.oid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(order) => {
 				if(order){

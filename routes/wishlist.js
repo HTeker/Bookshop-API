@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 module.exports = {
 	getWishlists: (req, res)=> {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					user.getWishlists().then(wishlists => {
@@ -20,7 +20,7 @@ module.exports = {
 	},
 
 	createWishlist: (req, res) => {
-		User.findById(req.params.id).then(
+		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
 					Wishlist.create(req.body).then(
@@ -44,7 +44,7 @@ module.exports = {
 	getWishlistById: (req, res) => {
 		Wishlist.findOne({where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
@@ -61,7 +61,7 @@ module.exports = {
 	deleteWishlistById: (req, res) => {
 		Wishlist.destroy({ where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
@@ -78,7 +78,7 @@ module.exports = {
 	updateWishlistById: (req, res) => {
 		Wishlist.findOne({where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
@@ -100,7 +100,7 @@ module.exports = {
 
 	searchWishlists: (req, res) => {
 		Wishlist.all({where: {
-			UserEmail: req.params.uid,
+			UserEmail: req.params.useremail,
 			name: {
 				[Sequelize.Op.like]: '%' + req.params.query + '%'
 			}
@@ -116,7 +116,7 @@ module.exports = {
 	addProducts: (req, res) => {
 		Wishlist.findOne({where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
@@ -146,7 +146,7 @@ module.exports = {
 	getProducts: (req, res) => {
 		Wishlist.findOne({where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
@@ -169,7 +169,7 @@ module.exports = {
 	removeProducts: (req, res) => {
 		Wishlist.findOne({where: {
 			id: req.params.wid,
-			UserEmail: req.params.uid
+			UserEmail: req.params.useremail
 		}}).then(
 			(wishlist) => {
 				if(wishlist){
