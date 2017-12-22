@@ -14,16 +14,27 @@ describe('Auth', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
-			done();
+            User.bulkCreate([
+                {name: 'Halil', email: 'halil@example.com', password: '1234Pass5678'},
+                {name: 'Teker', email: 'teker@example.com', password: '1234Pass5678'},
+                {name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678'},
+                {name: 'Jack', email: 'jack@example.com', password: '1234Pass5678'},
+                {name: 'Michael', email: 'michael@example.com', password: '1234Pass5678'}
+            ]).then((users) => {
+                done();
+            });
+
 		});
 	});
 
 	it('register a new user', function*(){
 		yield request(server).post('/user').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678'}).expect(201).end();
-		yield request(server).post('/user').send({ name: 'User #2', email: 'email2@example.com', password: '1234Pass5678'}).expect(201).end();
-		yield request(server).post('/user').send({ name: 'User #3', email: 'email3@example.com', password: '1234Pass5678'}).expect(201).end();
 		let users = (yield request(server).get('/user').expect(200).end()).body;
-		users.should.have.lengthOf(3);
+		users.should.have.lengthOf(6);
+	});
+
+	it('login with an existing user', function*(){
+		yield request(server).post('/login').send({ email: 'michael@example.com', password: '1234Pass5678'}).expect(200).end();
 	});
 
 });

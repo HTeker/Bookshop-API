@@ -9,7 +9,8 @@ var express = require('express'),
     category = require('./routes/category'),
     user = require('./routes/user'),
     wishlist = require('./routes/wishlist'),
-	order = require('./routes/order'),
+    order = require('./routes/order'),
+	auth = require('./routes/auth'),
     db = require('./data/db'),
     seeder = require('./data/seeder')
     Associations = require('./models/associations');
@@ -110,6 +111,10 @@ app.route('/user/:id/order')
 
 app.route('/user/:uid/order/:oid')
     .get(order.getOrderById);
+
+/* AUTH */
+app.route('/login')
+    .post(auth.login);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);

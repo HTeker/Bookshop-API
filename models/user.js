@@ -37,16 +37,19 @@ const User = db.define('User', {
 				msg: "Password should contain at least 1 lower case character, 1 upper case character and 1 digit"
 			}
 		}
-	},
-	salt: {
-		type: Sequelize.STRING
 	}
 });
 
-User.beforeSave((user, options) => {
-	user.salt = bcrypt.genSaltSync(10);
+User.beforeCreate((user, options) => {
 	user.password = bcrypt.hashSync(user.password, user.salt);
 	return;
+});
+
+User.beforeBulkCreate((users, options) => {
+	users.forEach(function(user){
+		user.password = bcrypt.hashSync(user.password, user.salt);
+		return;
+	});
 });
 
 module.exports = User;
