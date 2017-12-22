@@ -43,7 +43,7 @@ const User = db.define('User', {
 	}
 });
 
-User.beforeCreate((user, options) => {
+User.beforeSave((user, options) => {
 	user.salt = bcrypt.genSaltSync(10);
 	user.password = bcrypt.hashSync(user.password, user.salt);
 	return;
