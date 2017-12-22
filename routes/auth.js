@@ -21,7 +21,7 @@ module.exports = {
 							if(err){
 								res.status(400).json(err).end();
 							}else{
-								res.status(200).json({token}).end();
+								res.status(200).json(token).end();
 							}
 						});
 					});

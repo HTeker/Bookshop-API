@@ -40,15 +40,18 @@ describe('Order', () => {
 		products.push({product: product2, quantity: 3});
 		products.push({product: product3, quantity: 1});
 
-		yield request(server).post('/user/halil@example.com/order').send(products).expect(201).end();
+		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+
+		yield request(server).post('/user/halil@example.com/order').send(products).set('Authorization', 'Bearer ' + token).expect(201).end();
 		
-		let orders = (yield request(server).get('/user/halil@example.com/order').expect(200).end()).body;
+		let orders = (yield request(server).get('/user/halil@example.com/order').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(2);
 	});
 
 	it('get all orders of an user by email', function*(){
-		let orders = (yield request(server).get('/user/halil@example.com/order').expect(200).end()).body;
+		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+		let orders = (yield request(server).get('/user/halil@example.com/order').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(1);
 	});
