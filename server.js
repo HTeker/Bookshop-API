@@ -78,31 +78,31 @@ app.route('/user')
     .post(user.createUser);
 
 app.route('/user/:useremail')
-    .get(user.getUserById)
-    .delete(user.deleteUserById)
-    .put(user.updateUserById);
+    .get(auth.verifyUserToken, user.getUserById)
+    .delete(auth.verifyUserToken, user.deleteUserById)
+    .put(auth.verifyUserToken, user.updateUserById);
 
 app.route('/user/search/:query')
     .get(user.searchUsers);
 
 // USER WISHLISTS
 app.route('/user/:useremail/wishlist')
-    .get(wishlist.getWishlists)
-    .post(wishlist.createWishlist);
+    .get(auth.verifyUserToken, wishlist.getWishlists)
+    .post(auth.verifyUserToken, wishlist.createWishlist);
 
 app.route('/user/:useremail/wishlist/:wid')
-    .get(wishlist.getWishlistById)
-    .delete(wishlist.deleteWishlistById)
-    .put(wishlist.updateWishlistById);
+    .get(auth.verifyUserToken, wishlist.getWishlistById)
+    .delete(auth.verifyUserToken, wishlist.deleteWishlistById)
+    .put(auth.verifyUserToken, wishlist.updateWishlistById);
 
 app.route('/user/:useremail/wishlist/search/:query')
-    .get(wishlist.searchWishlists);
+    .get(auth.verifyUserToken, wishlist.searchWishlists);
 
 // USER WISHLIST PRODUCTS
 app.route('/user/:useremail/wishlist/:wid/product')
-    .get(wishlist.getProducts)
-    .post(wishlist.addProducts)
-    .delete(wishlist.removeProducts);
+    .get(auth.verifyUserToken, wishlist.getProducts)
+    .post(auth.verifyUserToken, wishlist.addProducts)
+    .delete(auth.verifyUserToken, wishlist.removeProducts);
 
 // USER ORDERS
 app.route('/user/:useremail/order')
@@ -110,7 +110,7 @@ app.route('/user/:useremail/order')
     .post(auth.verifyUserToken, order.createOrder);
 
 app.route('/user/:useremail/order/:oid')
-    .get(order.getOrderById);
+    .get(auth.verifyUserToken, order.getOrderById);
 
 /* AUTH */
 app.route('/login')

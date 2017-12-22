@@ -57,7 +57,8 @@ describe('Order', () => {
 	});
 
 	it('get an order of an user by email', function*(){
-		let order = (yield request(server).get('/user/halil@example.com/order/1').expect(200).end()).body;
+		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+		let order = (yield request(server).get('/user/halil@example.com/order/1').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		delete order.createdAt;
         delete order.updatedAt;
         delete order.orderedAt;

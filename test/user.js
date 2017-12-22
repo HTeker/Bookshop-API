@@ -39,7 +39,8 @@ describe('User', () => {
 	});
 
 	it('get a user by email', function*(){
-		let user = (yield request(server).get('/user/ibrahim@example.com').expect(200).end()).body;
+		const token = (yield request(server).post('/login').send({email: 'ibrahim@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+		let user = (yield request(server).get('/user/ibrahim@example.com').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
@@ -47,13 +48,15 @@ describe('User', () => {
 	});
 
 	it('delete a user by email', function*(){
-		yield request(server).delete('/user/halil@example.com').expect(200).end();
+		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+		yield request(server).delete('/user/halil@example.com').set('Authorization', 'Bearer ' + token).expect(200).end();
 		let users = (yield request(server).get('/user').expect(200).end()).body;
 		users.should.have.lengthOf(4);
 	});
 
 	it('update a user by email', function*(){
-		const user = (yield request(server).put('/user/jack@example.com').send({ name: 'Updated User' }).expect(200).end()).body;
+		const token = (yield request(server).post('/login').send({email: 'jack@example.com', password: '1234Pass5678'}).expect(200).end()).body;
+		const user = (yield request(server).put('/user/jack@example.com').send({ name: 'Updated User' }).set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
