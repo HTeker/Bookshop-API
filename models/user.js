@@ -1,5 +1,6 @@
 const 	db = require('../data/db'),
-		Sequelize = require('sequelize');
+		Sequelize = require('sequelize'),
+		bcrypt = require('bcryptjs');
 
 const User = db.define('User', {
 	name: {
@@ -36,7 +37,16 @@ const User = db.define('User', {
 				msg: "Password should contain at least 1 lower case character, 1 upper case character and 1 digit"
 			}
 		}
+	},
+	salt: {
+		type: Sequelize.STRING
 	}
+});
+
+User.beforeCreate((user, options) => {
+	user.salt = bcrypt.genSaltSync(10);
+	user.password = bcrypt.hashSync(user.password, user.salt);
+	return;
 });
 
 module.exports = User;
