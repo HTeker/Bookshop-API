@@ -26,7 +26,7 @@ if(process.env.NODE_ENV != 'test'){
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
 
@@ -37,17 +37,17 @@ app.use(bodyParser.json());
 /* PRODUCTS */
 app.route('/product')
     .get(product.getProducts)
-    .post(product.createProduct);
+    .post(auth.verifyAdminToken, product.createProduct);
 
 app.route('/product/:id')
     .get(product.getProductById)
-    .delete(product.deleteProductById)
-    .put(product.updateProductById);
+    .delete(auth.verifyAdminToken, product.deleteProductById)
+    .put(auth.verifyAdminToken, product.updateProductById);
 
 app.route('/product/:id/category')
     .get(product.getCategories)
-    .post(product.addCategories)
-    .delete(product.removeCategories);
+    .post(auth.verifyAdminToken, product.addCategories)
+    .delete(auth.verifyAdminToken, product.removeCategories);
 
 app.route('/product/search/:query')
     .get(product.searchProducts);
@@ -56,17 +56,17 @@ app.route('/product/search/:query')
 /* CATEGORIES */
 app.route('/category')
     .get(category.getCategories)
-    .post(category.createCategory);
+    .post(auth.verifyAdminToken, category.createCategory);
 
 app.route('/category/:id')
     .get(category.getCategoryById)
-    .delete(category.deleteCategoryById)
-    .put(category.updateCategoryById);
+    .delete(auth.verifyAdminToken, category.deleteCategoryById)
+    .put(auth.verifyAdminToken, category.updateCategoryById);
 
 app.route('/category/:id/product')
     .get(category.getProducts)
-    .post(category.addProducts)
-    .delete(category.removeProducts);
+    .post(auth.verifyAdminToken, category.addProducts)
+    .delete(auth.verifyAdminToken, category.removeProducts);
 
 app.route('/category/search/:query')
     .get(category.searchCategories);
@@ -74,8 +74,8 @@ app.route('/category/search/:query')
 
 /* USERS */
 app.route('/user')
-    .get(user.getUsers)
-    .post(user.createUser);
+    .get(auth.verifyAdminToken, user.getUsers)
+    .post(auth.verifyAdminToken, user.createUser);
 
 app.route('/user/:useremail')
     .get(auth.verifyUserToken, user.getUserById)
@@ -83,7 +83,7 @@ app.route('/user/:useremail')
     .put(auth.verifyUserToken, user.updateUserById);
 
 app.route('/user/search/:query')
-    .get(user.searchUsers);
+    .get(auth.verifyAdminToken, user.searchUsers);
 
 // USER WISHLISTS
 app.route('/user/:useremail/wishlist')
