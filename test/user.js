@@ -44,7 +44,7 @@ describe('User', () => {
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
-		user.should.deep.equal({name: 'Ibrahim', email: 'ibrahim@example.com'});
+		user.should.deep.equal({name: 'Ibrahim', isAdmin: false, email: 'ibrahim@example.com'});
 	});
 
 	it('delete a user by email', function*(){
@@ -60,7 +60,7 @@ describe('User', () => {
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
-		user.should.deep.equal({ name: 'Updated User', email: 'jack@example.com' });
+		user.should.deep.equal({ name: 'Updated User', isAdmin: false, email: 'jack@example.com' });
 	});
 
 	it('search users by name and email', function*(){
