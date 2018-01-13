@@ -10,6 +10,8 @@ let chai = require('chai'),
 	seeder = require('../data/seeder')
 	User = require('../models/user');
 
+var token;
+
 describe('Auth', () => {
 
 	beforeEach(function(done){
@@ -27,10 +29,12 @@ describe('Auth', () => {
 		});
 	});
 
+	it('get user token', function*(){
+		token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
+	});
+
 	it('register a new user', function*(){
 		yield request(server).post('/signup').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678'}).expect(201).end();
-
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 
 		let users = (yield request(server).get('/user').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		users.should.have.lengthOf(6);

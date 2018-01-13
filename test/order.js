@@ -12,6 +12,8 @@ let chai = require('chai'),
 	User = require('../models/user')
 	Product = require('../models/product');
 
+var token;
+
 describe('Order', () => {
 
 	beforeEach(function(done){
@@ -30,8 +32,11 @@ describe('Order', () => {
 		});
 	});
 
+	it('get user token', function*(){
+		token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
+	});
+
 	it('create an order for an user by email', function*(){
-		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		let products = [];
 		let product1 = (yield request(server).post('/product').send({ id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).set('Authorization', 'Bearer ' + token).expect(201).end()).body;
@@ -50,14 +55,12 @@ describe('Order', () => {
 	});
 
 	it('get all orders of an user by email', function*(){
-		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		let orders = (yield request(server).get('/user/halil@example.com/order').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		orders.should.be.a('array');
 		orders.should.have.lengthOf(1);
 	});
 
 	it('get an order of an user by email', function*(){
-		const token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		let order = (yield request(server).get('/user/halil@example.com/order/1').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		delete order.createdAt;
         delete order.updatedAt;

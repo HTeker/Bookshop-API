@@ -9,6 +9,8 @@ let chai = require('chai'),
 	db = require('../data/db')
 	Category = require('../models/category');
 
+var token;
+
 describe('Category', () => {
 
 	beforeEach(function(done){
@@ -30,6 +32,10 @@ describe('Category', () => {
 		});
 	});
 
+	it('get user token', function*(){
+		token = (yield request(server).post('/login').send({email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
+	});
+
 	it('get all categories', function*(){
 		let categories = (yield request(server).get('/category').expect(200).end()).body;
 		categories.should.be.a('array');
@@ -37,7 +43,6 @@ describe('Category', () => {
 	});
 
 	it('create a category', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 
 		yield request(server).post('/category').send({ name: 'Programming'}).set('Authorization', 'Bearer ' + token).expect(201).end();
 		let categories = (yield request(server).get('/category').expect(200).end()).body;
@@ -52,7 +57,6 @@ describe('Category', () => {
 	});
 
 	it('delete a category by id', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		yield request(server).delete('/category/1').set('Authorization', 'Bearer ' + token).expect(200).end();
 		let categories = (yield request(server).get('/category').expect(200).end()).body;
@@ -60,7 +64,6 @@ describe('Category', () => {
 	});
 
 	it('update a category by id', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		const category = (yield request(server).put('/category/4').send({ name: 'Updated Category' }).set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		delete category.createdAt;
@@ -83,7 +86,6 @@ describe('Category', () => {
 	});
 
 	it('add one product to a category', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		let product = (yield request(server).post('/product').send({ id: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).set('Authorization', 'Bearer ' + token).expect(201).end()).body;
 		yield request(server).post('/category/3/product').send(product).set('Authorization', 'Bearer ' + token).expect(201).end();
@@ -93,7 +95,6 @@ describe('Category', () => {
 	});
 
 	it('get all products of a category', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		let category = (yield request(server).post('/category').send({ name: 'Programming'}).set('Authorization', 'Bearer ' + token).expect(201).end()).body;
 
@@ -108,7 +109,6 @@ describe('Category', () => {
 	});
 
 	it('delete one product from a category', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		let product = (yield request(server).post('/product').send({ id: '0132350882', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).set('Authorization', 'Bearer ' + token).expect(201).end()).body;
 		yield request(server).post('/category/4/product').send(product).set('Authorization', 'Bearer ' + token).expect(201).end();
@@ -123,7 +123,6 @@ describe('Category', () => {
 	});
 
 	it('delete multiple products from a category', function*(){
-		let token = (yield request(server).post('/login').send({ email: 'halil@example.com', password: '1234Pass5678'}).expect(200).end()).body.token;
 		
 		let products = [];
 		products.push((yield request(server).post('/product').send({ id: '0132350886', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).set('Authorization', 'Bearer ' + token).expect(201).end()).body);
