@@ -32,6 +32,22 @@ module.exports = {
 		);
 	},
 
+	signup: (req, res, next) => {
+		User.create(req.body).then(
+			(user) => {
+				jwt.sign({user}, config.secretkey, (err, token) => {
+					if(err){
+						res.status(400).json(err).end();
+					}else{
+						res.status(201).json({user: user, token: token}).end();
+					}
+				});
+			},(err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
 	verifyUserToken: (req, res, next) => {
 		const bearerHeader = req.headers['authorization'];
 

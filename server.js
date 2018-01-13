@@ -75,7 +75,7 @@ app.route('/category/search/:query')
 /* USERS */
 app.route('/user')
     .get(auth.verifyAdminToken, user.getUsers)
-    .post(user.createUser);
+    .post(auth.verifyAdminToken, user.createUser);
 
 app.route('/user/:useremail')
     .get(auth.verifyAdminToken, user.getUserById)
@@ -115,6 +115,9 @@ app.route('/user/:useremail/order/:oid')
 /* AUTH */
 app.route('/login')
     .post(auth.login);
+
+app.route('/signup')
+    .post(auth.signup);
 
 app.listen(port, function(){
     console.log('Running API on port: ' + port);
