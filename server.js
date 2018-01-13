@@ -75,12 +75,12 @@ app.route('/category/search/:query')
 /* USERS */
 app.route('/user')
     .get(auth.verifyAdminToken, user.getUsers)
-    .post(auth.verifyAdminToken, user.createUser);
+    .post(user.createUser);
 
 app.route('/user/:useremail')
-    .get(auth.verifyUserToken, user.getUserById)
-    .delete(auth.verifyUserToken, user.deleteUserById)
-    .put(auth.verifyUserToken, user.updateUserById);
+    .get(auth.verifyAdminToken, user.getUserById)
+    .delete(auth.verifyAdminToken, user.deleteUserById)
+    .put(auth.verifyAdminToken, user.updateUserById);
 
 app.route('/user/search/:query')
     .get(auth.verifyAdminToken, user.searchUsers);
