@@ -66,7 +66,7 @@ describe('Order', () => {
         delete order.updatedAt;
         delete order.orderedAt;
         delete order.shippedAt;
-		order.should.deep.equal({id: 1, UserEmail: 'halil@example.com'});
+		order.should.deep.equal({id: 1, UserEmail: 'halil@example.com', status: 'ordered'});
 	});
 
 });

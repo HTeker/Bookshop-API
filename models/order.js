@@ -8,6 +8,10 @@ const Order = db.define('Order', {
 	},
 	shippedAt: {
 		type: Sequelize.DATE
+	},
+	status: {
+		type: Sequelize.STRING,
+		defaultValue: 'ordered'
 	}
 });
 
