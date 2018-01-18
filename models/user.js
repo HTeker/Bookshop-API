@@ -41,6 +41,50 @@ const User = db.define('User', {
 	isAdmin: {
 		type: Sequelize.BOOLEAN,
 		defaultValue: false
+	},
+	street: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			len: {
+				args: [3, 100],
+				msg: "Street should have a length between 3 and 100 characters"
+			}
+		}
+	},
+	number: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			len: {
+				args: [3, 100],
+				msg: "Number should have a length between 1 and 10 characters"
+			},
+			is: {
+				args: "(^[a-zA-Z0-9_.-]*$)",
+				msg: "Number should contain characters and digits only."
+			}
+		}
+	},
+	city: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			len: {
+				args: [3, 100],
+				msg: "Street should have a length between 3 and 100 characters"
+			}
+		}
+	},
+	zipcode: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			is: {
+				args: "(^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$)",
+				msg: "Zipcode should have the following format: 1111AA"
+			}
+		}
 	}
 });
 
