@@ -57,7 +57,10 @@ const assortments =[{
 module.exports = {
 	seed: (done = function(){}) => {
 
-		User.create({name: 'Halil', email: 'h.teker@live.nl', password: 'Admin43998742', isAdmin: true}).then(admin => {
+		User.bulkCreate([
+				{name: 'Halil', email: 'h.teker@live.nl', password: 'Admin43998742', isAdmin: true},
+				{name: 'Customer', email: 'customer@example.com', password: 'Customer123456'}
+			]).then(admin => {
 			assortments.forEach(function(assortment){
 				Category.create(assortment.category).then((category) =>{
 					Product.bulkCreate(assortment.products).then((products) => {
