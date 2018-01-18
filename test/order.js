@@ -18,8 +18,8 @@ describe('Order', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
-			User.create({name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678'}).then((user) => {
-				Order.create().then(order => {
+			User.create({name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}).then((user) => {
+				Order.create({totalPrice: 99.95}).then(order => {
 					Product.create({ id: '2342342341', name: 'Clean Code : A Handbook of Agile Software Craftsmanship', description: "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees.", price: 19.99, imgUrl: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1323/9780132350884.jpg', stock: 10, deliveryDays: 5 }).then(product => {
 						order.addProduct(product.id, {through: {quantity: 5}}).then(productOrder => {
 							user.addOrder(order).then(user => {
@@ -66,7 +66,7 @@ describe('Order', () => {
         delete order.updatedAt;
         delete order.orderedAt;
         delete order.shippedAt;
-		order.should.deep.equal({id: 1, UserEmail: 'halil@example.com', status: 'ordered'});
+		order.should.deep.equal({id: 1, UserEmail: 'halil@example.com', status: 'ordered', totalPrice: 99.95});
 	});
 
 });

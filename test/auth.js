@@ -17,11 +17,11 @@ describe('Auth', () => {
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
             User.bulkCreate([
-                {name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678'},
-                {name: 'Teker', email: 'teker@example.com', password: '1234Pass5678'},
-                {name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678'},
-                {name: 'Jack', email: 'jack@example.com', password: '1234Pass5678'},
-                {name: 'Michael', email: 'michael@example.com', password: '1234Pass5678'}
+                {name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+                {name: 'Teker', email: 'teker@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+                {name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+                {name: 'Jack', email: 'jack@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+                {name: 'Michael', email: 'michael@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}
             ]).then((users) => {
                 done();
             });
@@ -34,7 +34,7 @@ describe('Auth', () => {
 	});
 
 	it('register a new user', function*(){
-		yield request(server).post('/signup').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678'}).expect(201).end();
+		yield request(server).post('/signup').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}).expect(201).end();
 
 		let users = (yield request(server).get('/user').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		users.should.have.lengthOf(6);

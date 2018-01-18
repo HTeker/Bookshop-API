@@ -12,6 +12,16 @@ const Order = db.define('Order', {
 	status: {
 		type: Sequelize.STRING,
 		defaultValue: 'ordered'
+	},
+	totalPrice: {
+		type: Sequelize.FLOAT,
+		allowNull: false,
+		validate: {
+			isFloat: {
+				args: true,
+				msg: "Price should be a valid price"
+			}
+		}
 	}
 });
 

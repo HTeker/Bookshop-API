@@ -23,7 +23,14 @@ module.exports = {
 		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
-					Order.create().then(
+
+					var totalPrice = 0.0;
+
+					for(var i = 0; i < req.body.length; i++){
+						totalPrice += req.body[i].quantity * req.body[i].product.price;
+					}
+
+					Order.create({totalPrice}).then(
 						(order) => {
 							function addProducts(i){
 								if(i === req.body.length - 1){

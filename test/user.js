@@ -17,11 +17,11 @@ describe('User', () => {
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
 			User.bulkCreate([
-				{name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678'},
-				{name: 'Teker', email: 'teker@example.com', password: '1234Pass5678'},
-				{name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678'},
-				{name: 'Jack', email: 'jack@example.com', password: '1234Pass5678'},
-				{name: 'Michael', email: 'michael@example.com', password: '1234Pass5678'}
+				{name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+				{name: 'Teker', email: 'teker@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+				{name: 'Ibrahim', email: 'ibrahim@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+				{name: 'Jack', email: 'jack@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+				{name: 'Michael', email: 'michael@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}
 			]).then((users) => {
 				done();
 			});
@@ -39,7 +39,7 @@ describe('User', () => {
 	});
 
 	it('create a user', function*(){
-		yield request(server).post('/user').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678'}).set('Authorization', 'Bearer ' + token).expect(201).end();
+		yield request(server).post('/user').send({ name: 'User #', email: 'email@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}).set('Authorization', 'Bearer ' + token).expect(201).end();
 		let users = (yield request(server).get('/user').set('Authorization', 'Bearer ' + token).expect(200).end()).body;
 		users.should.have.lengthOf(6);
 	});
@@ -49,7 +49,7 @@ describe('User', () => {
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
-		user.should.deep.equal({name: 'Ibrahim', isAdmin: false, email: 'ibrahim@example.com'});
+		user.should.deep.equal({name: 'Ibrahim', isAdmin: false, email: 'ibrahim@example.com', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'});
 	});
 
 	it('delete a user by email', function*(){
@@ -63,7 +63,7 @@ describe('User', () => {
 		delete user.createdAt;
         delete user.updatedAt;
         delete user.password;
-		user.should.deep.equal({ name: 'Updated User', isAdmin: false, email: 'jack@example.com' });
+		user.should.deep.equal({ name: 'Updated User', isAdmin: false, email: 'jack@example.com', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB' });
 	});
 
 	it('search users by name and email', function*(){

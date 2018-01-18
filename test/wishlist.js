@@ -16,7 +16,7 @@ describe('Wishlist', () => {
 
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
-			User.create({name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678'}).then((user) => {
+			User.create({name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}).then((user) => {
 				Wishlist.bulkCreate([
 					{ name: 'Wishlist #1' },
 					{ name: 'Wishlist #2' },

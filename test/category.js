@@ -16,8 +16,8 @@ describe('Category', () => {
 	beforeEach(function(done){
 		db.sync({force: true}).then(function(){
 			User.bulkCreate([
-                {name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678'},
-                {name: 'Teker', email: 'teker@example.com', password: '1234Pass5678'}
+                {name: 'Halil', email: 'halil@example.com', isAdmin: true, password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'},
+                {name: 'Teker', email: 'teker@example.com', password: '1234Pass5678', street: 'Lorem Ipsumstraat', number: '123', city: 'Den Haag', zipcode: '1234AB'}
             ]).then((users) => {
             	Category.bulkCreate([
 					{ id: 1, name: 'Fiction' },
