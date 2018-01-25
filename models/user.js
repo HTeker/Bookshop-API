@@ -106,7 +106,6 @@ User.beforeCreate((user, options) => {
 			if(response.status == 200){
 				user.lat = response.data.results[0].geometry.location.lat;
 				user.lng = response.data.results[0].geometry.location.lng;
-				user.save();
 			}
 			return;
 		}.bind(this));
@@ -120,12 +119,8 @@ User.beforeBulkCreate((users, options) => {
 		axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + user.street + "+" + user.number + "+" + user.zipcode + "+" + user.city + "&key=" + config.geocoding_api_key)
 			.then(function(response){
 				if(response.status == 200){
-					console.log(response.data.results[0].geometry);
-					console.log(user);
 					user.lat = response.data.results[0].geometry.location.lat;
 					user.lng = response.data.results[0].geometry.location.lng;
-					console.log(user);
-					//user.save();
 				}
 				return;
 			}.bind(this));
