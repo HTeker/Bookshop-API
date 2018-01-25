@@ -76,6 +76,8 @@ module.exports = {
 			});
 		});
 
+		User.create({name: 'Halil Geo', email: 'h.teker@example.com', password: 'Geo123456', street: 'David Blesstraat', number: '154', city: 'Den Haag', zipcode: '2526BL'});
+
 		done();
 	}
 }

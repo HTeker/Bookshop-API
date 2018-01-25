@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/HTeker/Project-WebApp-API#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",

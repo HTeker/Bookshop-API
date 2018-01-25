@@ -1,6 +1,9 @@
 const 	db = require('../data/db'),
 		Sequelize = require('sequelize'),
-		bcrypt = require('bcryptjs');
+		bcrypt = require('bcryptjs'),
+		axios = require('axios');
+
+const config = require('../config.js');
 
 const User = db.define('User', {
 	name: {
@@ -57,7 +60,7 @@ const User = db.define('User', {
 		allowNull: false,
 		validate: {
 			len: {
-				args: [3, 100],
+				args: [1, 100],
 				msg: "Number should have a length between 1 and 10 characters"
 			},
 			is: {
@@ -85,18 +88,47 @@ const User = db.define('User', {
 				msg: "Zipcode should have the following format: 1111AA"
 			}
 		}
+	},
+	lat: {
+		type: Sequelize.FLOAT
+	},
+	lng: {
+		type: Sequelize.FLOAT
 	}
 });
 
 User.beforeCreate((user, options) => {
 	user.password = bcrypt.hashSync(user.password, user.salt);
-	return;
+
+	// Calculate geocoding
+	axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + user.street + "+" + user.number + "+" + user.zipcode + "+" + user.city + "&key=" + config.geocoding_api_key)
+		.then(function(response){
+			if(response.status == 200){
+				user.lat = response.data.results[0].geometry.location.lat;
+				user.lng = response.data.results[0].geometry.location.lng;
+				user.save();
+			}
+			return;
+		}.bind(this));
 });
 
 User.beforeBulkCreate((users, options) => {
 	users.forEach(function(user){
 		user.password = bcrypt.hashSync(user.password, user.salt);
-		return;
+
+		// Calculate geocoding
+		axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + user.street + "+" + user.number + "+" + user.zipcode + "+" + user.city + "&key=" + config.geocoding_api_key)
+			.then(function(response){
+				if(response.status == 200){
+					console.log(response.data.results[0].geometry);
+					console.log(user);
+					user.lat = response.data.results[0].geometry.location.lat;
+					user.lng = response.data.results[0].geometry.location.lng;
+					console.log(user);
+					//user.save();
+				}
+				return;
+			}.bind(this));
 	});
 });
 
