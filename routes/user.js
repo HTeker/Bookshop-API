@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const Sequelize = require('sequelize');
+const axios = require('axios');
+const config = require('../config.js');
 
 module.exports = {
 	getUsers: (req, res) => {
@@ -15,7 +17,15 @@ module.exports = {
 	createUser: (req, res) => {
 		User.create(req.body).then(
 			(user) => {
-				res.status(201).json(user).end();
+				axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + user.street + "+" + user.number + "+" + user.zipcode + "+" + user.city + "&key=" + config.geocoding_api_key)
+					.then(function(response){
+						if(response.status == 200){
+							user.lat = response.data.results[0].geometry.location.lat;
+							user.lng = response.data.results[0].geometry.location.lng;
+							user.save();
+						}
+						res.status(201).json(user).end();
+					});
 			},(err) => {
 				res.status(400).json(err).end();
 			}

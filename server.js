@@ -106,11 +106,15 @@ app.route('/user/:useremail/wishlist/:wid/product')
 
 // USER ORDERS
 app.route('/user/:useremail/order')
-    .get(auth.verifyUserToken, order.getOrders)
+    .get(auth.verifyUserToken, order.getOrdersOfUser)
     .post(auth.verifyUserToken, order.createOrder);
 
 app.route('/user/:useremail/order/:oid')
     .get(auth.verifyUserToken, order.getOrderById);
+
+// ADMIN REQUESTS
+app.route('/orders')
+    .get(auth.verifyAdminToken, order.getOrders);
 
 /* AUTH */
 app.route('/login')

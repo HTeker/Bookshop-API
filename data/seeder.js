@@ -58,8 +58,8 @@ module.exports = {
 	seed: (done = function(){}) => {
 
 		User.bulkCreate([
-				{name: 'Halil', email: 'h.teker@live.nl', password: 'Admin43998742', street: 'David Blesstraat', number: '154', city: 'Den Haag', zipcode: '2526BL', isAdmin: true},
-				{name: 'Customer', email: 'customer@example.com', password: 'Customer123456', street: 'Morgenzonlaan', number: '17', city: 'Den Haag', zipcode: '2572WW'}
+				{name: 'Admin', email: 'admin@example.com', password: 'Admin123456', street: 'David Blesstraat', number: '154', city: 'Den Haag', zipcode: '2526BL', lat: 52.0649, lng: 4.30826, isAdmin: true},
+				{name: 'Customer', email: 'customer@example.com', password: 'Customer123456', street: 'Morgenzonlaan', number: '17', city: 'Den Haag', zipcode: '2572WW', lat: 52.0652, lng: 4.29249}
 			]).then(admin => {
 			assortments.forEach(function(assortment){
 				Category.create(assortment.category).then((category) =>{
@@ -75,8 +75,6 @@ module.exports = {
 				});
 			});
 		});
-
-		User.create({name: 'Halil Geo', email: 'h.teker@example.com', password: 'Geo123456', street: 'David Blesstraat', number: '154', city: 'Den Haag', zipcode: '2526BL'});
 
 		done();
 	}

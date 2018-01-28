@@ -2,6 +2,8 @@ const User = require('../models/user');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const axios = require('axios');
 const config = require('../config');
 
 module.exports = {
@@ -35,13 +37,21 @@ module.exports = {
 	signup: (req, res, next) => {
 		User.create(req.body).then(
 			(user) => {
-				jwt.sign({user}, config.secretkey, (err, token) => {
-					if(err){
-						res.status(400).json(err).end();
-					}else{
-						res.status(201).json({user: user, token: token}).end();
-					}
-				});
+				axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + user.street + "+" + user.number + "+" + user.zipcode + "+" + user.city + "&key=" + config.geocoding_api_key)
+					.then(function(response){
+						if(response.status == 200){
+							user.lat = response.data.results[0].geometry.location.lat;
+							user.lng = response.data.results[0].geometry.location.lng;
+							user.save();
+						}
+						jwt.sign({user}, config.secretkey, (err, token) => {
+							if(err){
+								res.status(400).json(err).end();
+							}else{
+								res.status(201).json({user: user, token: token}).end();
+							}
+						});
+					});
 			},(err) => {
 				res.status(400).json(err).end();
 			}

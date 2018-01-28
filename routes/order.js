@@ -4,6 +4,16 @@ const Sequelize = require('sequelize');
 
 module.exports = {
 	getOrders: (req, res) => {
+		User.findAll({include: [{ model: Order, as: 'orders' }]}).then(
+			(users) => {
+				res.status(200).json(users).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	getOrdersOfUser: (req, res) => {
 		User.findById(req.params.useremail).then(
 			(user) => {
 				if(user){
