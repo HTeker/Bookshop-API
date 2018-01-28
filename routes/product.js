@@ -164,5 +164,19 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	getProductsNotInStock: (req, res) => {
+		Product.all({
+			where: {
+				stock: 0
+			}
+		}).then(
+			(products) => {
+				res.status(200).json(products).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

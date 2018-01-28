@@ -39,6 +39,9 @@ app.route('/product')
     .get(product.getProducts)
     .post(auth.verifyAdminToken, product.createProduct);
 
+app.route('/product/not-in-stock')
+    .get(auth.verifyAdminToken, product.getProductsNotInStock);
+
 app.route('/product/:id')
     .get(product.getProductById)
     .delete(auth.verifyAdminToken, product.deleteProductById)
@@ -115,6 +118,9 @@ app.route('/user/:useremail/order/:oid')
 // ADMIN REQUESTS
 app.route('/orders')
     .get(auth.verifyAdminToken, order.getOrders);
+
+// GENERAL REQUESTS
+//app.route();
 
 /* AUTH */
 app.route('/login')

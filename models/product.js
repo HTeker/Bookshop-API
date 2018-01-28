@@ -60,7 +60,7 @@ const Product = db.define('Product', {
 	stock: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
-		defaultValue: 0,
+		defaultValue: 5,
 		validate: {
 			isInt: {
 				args: true,
