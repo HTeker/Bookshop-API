@@ -159,5 +159,33 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	getNewestCategories: (req, res) => {
+		Category.all({
+			order: [['createdAt', 'DESC']]
+		})
+		.then(
+			(categories) => {
+				res.status(200).json(categories).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	getRandomCategories: (req, res) => {
+		Category.all({
+			order: [
+				Sequelize.fn('RAND')
+			]
+		})
+		.then(
+			(categories) => {
+				res.status(200).json(categories).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

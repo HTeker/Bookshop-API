@@ -178,5 +178,33 @@ module.exports = {
 				res.status(400).json(err).end();
 			}
 		);
+	},
+
+	getNewestProducts: (req, res) => {
+		Product.all({
+			order: [['createdAt', 'DESC']]
+		})
+		.then(
+			(products) => {
+				res.status(200).json(products).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
+	},
+
+	getRandomProducts: (req, res) => {
+		Product.all({
+			order: [
+				Sequelize.fn('RAND')
+			]
+		})
+		.then(
+			(products) => {
+				res.status(200).json(products).end();
+			}, (err) => {
+				res.status(400).json(err).end();
+			}
+		);
 	}
 };

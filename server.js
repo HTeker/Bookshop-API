@@ -39,6 +39,12 @@ app.route('/product')
     .get(product.getProducts)
     .post(auth.verifyAdminToken, product.createProduct);
 
+app.route('/product/newest')
+    .get(product.getNewestProducts);
+
+app.route('/product/random')
+    .get(product.getRandomProducts);
+
 app.route('/product/not-in-stock')
     .get(auth.verifyAdminToken, product.getProductsNotInStock);
 
@@ -60,6 +66,12 @@ app.route('/product/search/:query')
 app.route('/category')
     .get(category.getCategories)
     .post(auth.verifyAdminToken, category.createCategory);
+
+app.route('/category/newest')
+    .get(category.getNewestCategories);
+
+app.route('/category/random')
+    .get(category.getRandomCategories);
 
 app.route('/category/:id')
     .get(category.getCategoryById)
