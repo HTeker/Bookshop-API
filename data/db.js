@@ -17,12 +17,12 @@ if(process.env.NODE_ENV == 'test'){
 });*/
 
 const db = new Sequelize({
-    host: 'localhost',
-    port: 3306,
+    host: process.env.DATABASE_URL || 'localhost',
+    port: 5432,
     database: 'webapp',
     username: 'root',
     password: 'root',
-    dialect: 'mysql',
+    dialect: 'postgres',
     logging: logging
 });
 
