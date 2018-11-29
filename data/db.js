@@ -4,7 +4,7 @@ let db;
 
 switch(process.env.NODE_ENV.trim()) {
 
-	case: 'test':
+	case 'test':
 		
 		console.log('Connecting to test database...');
 
